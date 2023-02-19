@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/protractor.gd" type="Script" id=1]
 [ext_resource path="res://images/transportador-nautico-cuadrado.png" type="Texture" id=2]
 
-[node name="TextureRect" type="TextureRect"]
+[node name="protractor" type="TextureRect"]
 margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 2 )

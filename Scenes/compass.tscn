@@ -1,5 +1,5 @@
 [gd_scene format=2]
 
-[node name="ReferenceRect" type="ReferenceRect"]
+[node name="compass" type="ReferenceRect"]
 margin_right = 40.0
 margin_bottom = 40.0

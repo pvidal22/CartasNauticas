@@ -1,7 +1,9 @@
 extends TextureRect
 
-export var width_mm = 100;
-export var height_mm = 100;
+export var width_mm: int = 100;
+export var height_mm: int = 100;
+export var speed_x: int = 10;
+export var speed_y: int = 10;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
