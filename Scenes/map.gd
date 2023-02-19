@@ -8,7 +8,8 @@ var compass_visible: bool = false;
 var protractor_visible: bool = false;
 var triangle_rule_visible: bool = false;
 
-enum Popup_options {SHOW_COMPASS, HIDE_COMPASS, SHOW_PROTRACTOR, HIDE_PROTRACTOR, SHOW_TRIANGLE, HIDE_TRIANGLE};
+enum Popup_options {SHOW_COMPASS, HIDE_COMPASS, SHOW_PROTRACTOR, HIDE_PROTRACTOR, SHOW_TRIANGLE \
+	, HIDE_TRIANGLE, CANCEL};
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,19 +19,23 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	check_popup_menus();
-	check_visibility();	
 	
+func _input(event):
+	if event is InputEventMouseButton:
+		event = event as InputEventMouseButton
+		if event.pressed:
+			match event.button_index:
+				BUTTON_WHEEL_UP:
+					print("up")
+				BUTTON_WHEEL_DOWN:
+					print("down")
+
 func check_popup_menus():
 	if !Input.is_action_just_pressed("click_right"):
 		return;
 		
 	var popup_menu: PopupMenu = PopupMenu.new();
-	#var children = $popup_menu.get_children();
-	#for child in children:
-	#	$popup_menu.remove_child(child);
-		
-	#$popup_menu.set_submenu_popup_delay(0.3);
-
+	
 	var submenu: PopupMenu = PopupMenu.new();
 	submenu.set_name("sub_compass");
 	if $compass.visible:
@@ -66,32 +71,25 @@ func check_popup_menus():
 	popup_menu.add_submenu_item("Cartabón", "sub_triangle");
 	popup_menu.set_name("popup_menu");
 	self.add_child(popup_menu);	
+	popup_menu.add_item("Cancel", Popup_options.CANCEL);
 	popup_menu.visible = true
-	
-func check_visibility():
-	if Input.is_action_just_pressed("compass"):
-		get_node("compass").visible = !get_node("compass").visible;
-			
-	if Input.is_action_just_pressed("protractor"):
-		$protractor.visible = !$protractor.visible;
 		
-	if Input.is_action_just_pressed("triangle_ruler"):
-		$triangle_ruler.visible = !$triangle_ruler.visible;
-	
 func _on_popup_menu_id_pressed(id):
 	self.get_node("popup_menu").queue_free();
-	
-	if id == Popup_options.HIDE_COMPASS:
-		$compass.visible = false;
-	elif id == Popup_options.HIDE_PROTRACTOR:
-		$protractor.visible = false;
-	elif id == Popup_options.HIDE_TRIANGLE:
-		$triangle_ruler.visible = false;
-	elif id == Popup_options.SHOW_COMPASS:
-		$compass.visible = true;
-	elif id == Popup_options.SHOW_PROTRACTOR:
-		$protractor.visible = true;
-	elif id == Popup_options.SHOW_TRIANGLE:
-		$triangle_ruler.visible = true;
-	else:
-		print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
+
+	match id:
+		Popup_options.HIDE_COMPASS:
+			$compass.visible = false;
+		Popup_options.HIDE_PROTRACTOR:
+			$protractor.visible = false;
+		Popup_options.HIDE_TRIANGLE:
+			$triangle_ruler.visible = false;
+		Popup_options.SHOW_COMPASS:
+			$compass.visible = true;
+		Popup_options.SHOW_PROTRACTOR:
+			$protractor.visible = true;
+		Popup_options.SHOW_TRIANGLE:
+			$triangle_ruler.visible = true;
+		_:
+			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
+		
