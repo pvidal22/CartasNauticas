@@ -15,16 +15,14 @@ enum Popup_options {\
 	, SHOW_TRIANGLE, HIDE_TRIANGLE\
 	, CANCEL};
 
+var common = load("res://school_items.gd").new("Nautical Chart");
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	size = get_viewport_rect().size;
 	print("Size: " + str(size));
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#check_popup_menus();
-	pass;	
-	
+# Called every frame. 'delta' is the elapsed time since the previous frame.	
 func _input(event):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
@@ -147,4 +145,18 @@ func _on_carta_menu_pressed():
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 	
 func move_chart():
-	pass;
+	common.start_moving(get_viewport().get_mouse_position());
+	
+func _process(delta):
+	if common.get_moving(): move_it();
+	
+func move_it():
+	var this_position = self.size;
+	var mouse = get_viewport().get_mouse_position();
+	var canvas = get_viewport_rect().size;
+	
+	need to implement an easy way to move the chart
+
+	this_position.x += mouse.x;
+	this_position.y+= mouse.y;	
+	self.set_position(this_position);
