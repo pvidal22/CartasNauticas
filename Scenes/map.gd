@@ -9,7 +9,8 @@ var protractor_visible: bool = false;
 var triangle_rule_visible: bool = false;
 
 enum Popup_options {\
-	SHOW_COMPASS, HIDE_COMPASS\
+	MOVE_CHART \
+	, SHOW_COMPASS, HIDE_COMPASS\
 	, SHOW_PROTRACTOR, HIDE_PROTRACTOR, MOVE_PROTRACTOR, TURN_PROTRACTOR, FLIP_PROTRACTOR\
 	, SHOW_TRIANGLE, HIDE_TRIANGLE\
 	, CANCEL};
@@ -22,8 +23,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#check_popup_menus();
-	pass;
-	
+	pass;	
 	
 func _input(event):
 	if event is InputEventMouseButton:
@@ -101,6 +101,8 @@ func _on_popup_menu_id_pressed(id):
 			$triangle_ruler.visible = false;
 		Popup_options.SHOW_TRIANGLE:
 			$triangle_ruler.visible = true;
+		Popup_options.MOVE_CHART:
+			move_chart();
 		_:
 			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
 
@@ -136,3 +138,13 @@ func _on_triangle_menu_pressed():
 		menu.add_item("Ocultar cartabón", Popup_options.HIDE_TRIANGLE);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+
+func _on_carta_menu_pressed():
+	var menu = $options_menu/carta_menu.get_popup();
+	menu.clear();
+	menu.add_item("Mover carta náutica", Popup_options.MOVE_CHART);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+	
+func move_chart():
+	pass;

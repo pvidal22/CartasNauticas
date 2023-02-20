@@ -32,12 +32,21 @@ margin_right = 500.0
 margin_bottom = 500.0
 
 [node name="options_menu" type="HBoxContainer" parent="."]
-margin_right = 314.0
+margin_right = 414.0
 margin_bottom = 20.0
 alignment = 1
 
+[node name="carta_menu" type="MenuButton" parent="options_menu"]
+margin_right = 96.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
+text = "Carta Náutica"
+
 [node name="compass_menu" type="MenuButton" parent="options_menu"]
-margin_right = 63.0
+margin_left = 100.0
+margin_right = 163.0
 margin_bottom = 20.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
@@ -45,8 +54,8 @@ custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Compas"
 
 [node name="protractor_menu" type="MenuButton" parent="options_menu"]
-margin_left = 67.0
-margin_right = 242.0
+margin_left = 167.0
+margin_right = 342.0
 margin_bottom = 20.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
@@ -54,14 +63,15 @@ custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Transportador de Ángulos"
 
 [node name="triangle_menu" type="MenuButton" parent="options_menu"]
-margin_left = 246.0
-margin_right = 314.0
+margin_left = 346.0
+margin_right = 414.0
 margin_bottom = 20.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Cartabón"
 
+[connection signal="pressed" from="options_menu/carta_menu" to="." method="_on_carta_menu_pressed"]
 [connection signal="pressed" from="options_menu/compass_menu" to="." method="_on_compass_menu_pressed"]
 [connection signal="pressed" from="options_menu/protractor_menu" to="." method="_on_protractor_menu_pressed"]
 [connection signal="pressed" from="options_menu/triangle_menu" to="." method="_on_triangle_menu_pressed"]
