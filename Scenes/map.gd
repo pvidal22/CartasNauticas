@@ -8,8 +8,11 @@ var compass_visible: bool = false;
 var protractor_visible: bool = false;
 var triangle_rule_visible: bool = false;
 
-enum Popup_options {SHOW_COMPASS, HIDE_COMPASS, SHOW_PROTRACTOR, HIDE_PROTRACTOR, SHOW_TRIANGLE \
-	, HIDE_TRIANGLE, CANCEL};
+enum Popup_options {\
+	SHOW_COMPASS, HIDE_COMPASS\
+	, SHOW_PROTRACTOR, HIDE_PROTRACTOR, MOVE_PROTRACTOR, TURN_PROTRACTOR, FLIP_PROTRACTOR\
+	, SHOW_TRIANGLE, HIDE_TRIANGLE\
+	, CANCEL};
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,7 +21,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	check_popup_menus();
+	#check_popup_menus();
+	pass;
+	
 	
 func _input(event):
 	if event is InputEventMouseButton:
@@ -31,6 +36,7 @@ func _input(event):
 					print("down")
 
 func check_popup_menus():
+	### NOT USED !!!!
 	if !Input.is_action_just_pressed("click_right"):
 		return;
 		
@@ -75,21 +81,58 @@ func check_popup_menus():
 	popup_menu.visible = true
 		
 func _on_popup_menu_id_pressed(id):
-	self.get_node("popup_menu").queue_free();
-
 	match id:
 		Popup_options.HIDE_COMPASS:
 			$compass.visible = false;
-		Popup_options.HIDE_PROTRACTOR:
-			$protractor.visible = false;
-		Popup_options.HIDE_TRIANGLE:
-			$triangle_ruler.visible = false;
 		Popup_options.SHOW_COMPASS:
 			$compass.visible = true;
+		Popup_options.HIDE_PROTRACTOR:
+			$protractor.visible = false;
+			$protractor.stop_it();
 		Popup_options.SHOW_PROTRACTOR:
 			$protractor.visible = true;
+		Popup_options.TURN_PROTRACTOR:
+			$protractor.start_turning();
+		Popup_options.FLIP_PROTRACTOR:
+			$protractor.flip_it();
+		Popup_options.MOVE_PROTRACTOR:
+			$protractor.start_moving();
+		Popup_options.HIDE_TRIANGLE:
+			$triangle_ruler.visible = false;
 		Popup_options.SHOW_TRIANGLE:
 			$triangle_ruler.visible = true;
 		_:
 			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
-		
+
+func _on_compass_menu_pressed():	
+	var menu = $options_menu/compass_menu.get_popup();
+	menu.clear();	
+	if not $compass.visible:
+		menu.add_item("Mostrar compas", Popup_options.SHOW_COMPASS);
+	else:
+		menu.add_item("Ocultar compas", Popup_options.HIDE_COMPASS);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+
+func _on_protractor_menu_pressed():	
+	var menu = $options_menu/protractor_menu.get_popup();
+	menu.clear();
+	if not $protractor.visible:
+		menu.add_item("Mostrar transportador", Popup_options.SHOW_PROTRACTOR);
+	else:
+		menu.add_item("Ocultar transportador", Popup_options.HIDE_PROTRACTOR);
+		menu.add_item("Mover transportador", Popup_options.MOVE_PROTRACTOR);
+		menu.add_item("Girar transportador", Popup_options.TURN_PROTRACTOR);
+		menu.add_item("Voltear transportador", Popup_options.FLIP_PROTRACTOR);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+
+func _on_triangle_menu_pressed():
+	var menu = $options_menu/triangle_menu.get_popup();
+	menu.clear();
+	if not $triangle_ruler.visible:
+		menu.add_item("Mostrar cartabón", Popup_options.SHOW_TRIANGLE);
+	else:
+		menu.add_item("Ocultar cartabón", Popup_options.HIDE_TRIANGLE);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
