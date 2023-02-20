@@ -1,5 +1,5 @@
 Poner los cartabones y el resto de cosas debajo de collissions... sólo para hacer que no se pueda pasar uno por encima del otro... y que pueda chocar con el lápiz...
 No intentar controlarlo por código porque se puede poner cualquier lado de la imagen... y eso sería un rollo
-
+Hacer algo para cambiar el tipo de los objetos... y sobretodo... mirar de mover fácilmente la carta
 
 
