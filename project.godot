@@ -8,20 +8,10 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Reference",
-"class": "CSchollItem",
-"language": "GDScript",
-"path": "res://school_items.gd"
-} ]
-_global_script_class_icons={
-"CSchollItem": ""
-}
-
 [application]
 
 config/name="CartasNauticas"
-run/main_scene="res://Scenes/map.tscn"
+run/main_scene="res://Scenes/chart.tscn"
 config/icon="res://icon.png"
 
 [global]

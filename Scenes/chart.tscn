@@ -1,40 +1,38 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://images/carta_de_navegacion.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/map.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/protactor.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/triangle_ruler.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/compass.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/protactor.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/triangle_ruler.tscn" type="PackedScene" id=5]
+[ext_resource path="res://images/carta_de_navegacion.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/chart.gd" type="Script" id=5]
 
-[node name="map" type="ScrollContainer"]
+[node name="chart" type="ScrollContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
-script = ExtResource( 2 )
+script = ExtResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 2339.0
 margin_bottom = 1653.0
-texture = ExtResource( 1 )
+texture = ExtResource( 4 )
 
 [node name="compass" parent="." instance=ExtResource( 3 )]
 visible = false
 margin_right = 0.0
 margin_bottom = 0.0
 
-[node name="protractor" parent="." instance=ExtResource( 4 )]
+[node name="protractor" parent="." instance=ExtResource( 1 )]
 visible = false
-margin_right = 500.0
-margin_bottom = 500.0
 
-[node name="triangle_ruler" parent="." instance=ExtResource( 5 )]
+[node name="triangle_ruler" parent="." instance=ExtResource( 2 )]
 visible = false
 margin_right = 500.0
 margin_bottom = 500.0
 
 [node name="options_menu" type="HBoxContainer" parent="."]
-margin_right = 414.0
+margin_right = 457.0
 margin_bottom = 20.0
 alignment = 1
 
@@ -73,7 +71,17 @@ custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Cartabón"
 
+[node name="quit_menu" type="MenuButton" parent="options_menu"]
+margin_left = 418.0
+margin_right = 457.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
+text = "Salir"
+
 [connection signal="pressed" from="options_menu/carta_menu" to="." method="_on_carta_menu_pressed"]
 [connection signal="pressed" from="options_menu/compass_menu" to="." method="_on_compass_menu_pressed"]
 [connection signal="pressed" from="options_menu/protractor_menu" to="." method="_on_protractor_menu_pressed"]
 [connection signal="pressed" from="options_menu/triangle_menu" to="." method="_on_triangle_menu_pressed"]
+[connection signal="pressed" from="options_menu/quit_menu" to="." method="_on_quit_menu_pressed"]

@@ -7,13 +7,16 @@ var size: Vector2 = Vector2.ZERO;
 var compass_visible: bool = false;
 var protractor_visible: bool = false;
 var triangle_rule_visible: bool = false;
+var previous_mouse_position: Vector2 = Vector2.ZERO;
+var is_first := true;
 
 enum Popup_options {\
 	MOVE_CHART \
 	, SHOW_COMPASS, HIDE_COMPASS\
 	, SHOW_PROTRACTOR, HIDE_PROTRACTOR, MOVE_PROTRACTOR, TURN_PROTRACTOR, FLIP_PROTRACTOR\
 	, SHOW_TRIANGLE, HIDE_TRIANGLE\
-	, CANCEL};
+	, CANCEL\
+	, QUIT_YES, QUIT_NO};
 
 var common = load("res://school_items.gd").new("Nautical Chart");
 
@@ -21,17 +24,27 @@ var common = load("res://school_items.gd").new("Nautical Chart");
 func _ready():
 	size = get_viewport_rect().size;
 	print("Size: " + str(size));
+	var texture = $TextureRect.get_size();
+	$TextureRect.set_position(Vector2(-texture.x / 2, size.y / 2)); 
+	$TextureRect.set_position(Vector2(-1000, -1000)); 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.	
-func _input(event):
-	if event is InputEventMouseButton:
-		event = event as InputEventMouseButton
-		if event.pressed:
-			match event.button_index:
+func _input(ev):
+	if ev is InputEventMouseButton:
+		ev = ev as InputEventMouseButton
+		if ev.pressed:
+			match ev.button_index:
 				BUTTON_WHEEL_UP:
 					print("up")
 				BUTTON_WHEEL_DOWN:
 					print("down")
+		if ev.button_index == 1 and ev.doubleclick:
+			print("Stop all");
+			common.stop_it();
+			$protractor.stop_it();
+			#$compass.stop_it();
+			#$triangle_ruler.stop_it();
+
 
 func check_popup_menus():
 	### NOT USED !!!!
@@ -101,6 +114,11 @@ func _on_popup_menu_id_pressed(id):
 			$triangle_ruler.visible = true;
 		Popup_options.MOVE_CHART:
 			move_chart();
+		Popup_options.QUIT_NO:
+			pass;
+		Popup_options.QUIT_YES:
+			print("Nos vemos!!!");
+			get_tree().quit();
 		_:
 			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
 
@@ -143,20 +161,41 @@ func _on_carta_menu_pressed():
 	menu.add_item("Mover carta náutica", Popup_options.MOVE_CHART);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+
+func _on_quit_menu_pressed():
+	var menu = $options_menu/quit_menu.get_popup();
+	menu.clear();
+	menu.add_item("Estoy seguro", Popup_options.QUIT_YES);
+	menu.add_item("Cancelar", Popup_options.QUIT_NO);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 	
 func move_chart():
 	common.start_moving(get_viewport().get_mouse_position());
 	
 func _process(delta):
+	if is_first:		
+		var texture = $TextureRect.get_size() / 2;
+		var this_size = size / 2;
+		$TextureRect.set_position(this_size - texture);
+		is_first = false;
+
 	if common.get_moving(): move_it();
 	
 func move_it():
-	var this_position = self.size;
-	var mouse = get_viewport().get_mouse_position();
-	var canvas = get_viewport_rect().size;
-	
-	need to implement an easy way to move the chart
+	var mouse_position := get_viewport().get_mouse_position();	
+	var canvas := get_viewport_rect().size;
+	var texture = $TextureRect.get_size();
+	var this_position = $TextureRect.get_position();
+	if previous_mouse_position != Vector2.ZERO:
+		var delta := Vector2(mouse_position - previous_mouse_position);
+		this_position += Vector2(delta.x if abs(delta.x) < 10 else 0, delta.y if abs(delta.y) < 10 else 0);
+		
+	# Clamping it.
+	if this_position.x > 0: this_position.x = 0;
+	if this_position.x + texture.x < canvas.x: this_position.x = canvas.x - texture.x;
+	if this_position.y > 0: this_position.y = 0;
+	if this_position.y + texture.y < canvas.y: this_position.y = canvas.y - texture.y;
 
-	this_position.x += mouse.x;
-	this_position.y+= mouse.y;	
-	self.set_position(this_position);
+	$TextureRect.set_position(this_position);
+	previous_mouse_position = mouse_position;
