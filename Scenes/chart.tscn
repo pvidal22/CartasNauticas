@@ -12,6 +12,8 @@ anchor_bottom = 1.0
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 script = ExtResource( 5 )
+width_mm = null
+height_mm = null
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 2339.0
@@ -32,56 +34,54 @@ margin_right = 500.0
 margin_bottom = 500.0
 
 [node name="options_menu" type="HBoxContainer" parent="."]
-margin_right = 457.0
+margin_right = 506.0
 margin_bottom = 20.0
 alignment = 1
 
 [node name="carta_menu" type="MenuButton" parent="options_menu"]
 margin_right = 96.0
 margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Carta Náutica"
+flat = false
 
 [node name="compass_menu" type="MenuButton" parent="options_menu"]
 margin_left = 100.0
 margin_right = 163.0
 margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Compas"
+flat = false
 
 [node name="protractor_menu" type="MenuButton" parent="options_menu"]
 margin_left = 167.0
 margin_right = 342.0
 margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Transportador de Ángulos"
+flat = false
 
 [node name="triangle_menu" type="MenuButton" parent="options_menu"]
 margin_left = 346.0
 margin_right = 414.0
 margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Cartabón"
+flat = false
+
+[node name="pencil_menu" type="MenuButton" parent="options_menu"]
+margin_left = 418.0
+margin_right = 463.0
+margin_bottom = 20.0
+text = "Lápiz"
+flat = false
 
 [node name="quit_menu" type="MenuButton" parent="options_menu"]
-margin_left = 418.0
-margin_right = 457.0
+margin_left = 467.0
+margin_right = 506.0
 margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 1, 1 )
 text = "Salir"
+flat = false
 
 [connection signal="pressed" from="options_menu/carta_menu" to="." method="_on_carta_menu_pressed"]
 [connection signal="pressed" from="options_menu/compass_menu" to="." method="_on_compass_menu_pressed"]
 [connection signal="pressed" from="options_menu/protractor_menu" to="." method="_on_protractor_menu_pressed"]
 [connection signal="pressed" from="options_menu/triangle_menu" to="." method="_on_triangle_menu_pressed"]
+[connection signal="pressed" from="options_menu/pencil_menu" to="." method="_on_pencil_menu_pressed"]
 [connection signal="pressed" from="options_menu/quit_menu" to="." method="_on_quit_menu_pressed"]

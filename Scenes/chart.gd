@@ -162,6 +162,21 @@ func _on_carta_menu_pressed():
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
+func _on_pencil_menu_pressed():
+	var menu = $options_menu/pencil_menu.get_popup();
+	menu.clear();
+	
+	need to implement a pencil object
+	if not $protractor.visible:
+		menu.add_item("Mostrar transportador", Popup_options.SHOW_PROTRACTOR);
+	else:
+		menu.add_item("Ocultar transportador", Popup_options.HIDE_PROTRACTOR);
+		menu.add_item("Mover transportador", Popup_options.MOVE_PROTRACTOR);
+		menu.add_item("Girar transportador", Popup_options.TURN_PROTRACTOR);
+		menu.add_item("Voltear transportador", Popup_options.FLIP_PROTRACTOR);
+	
+	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
+
 func _on_quit_menu_pressed():
 	var menu = $options_menu/quit_menu.get_popup();
 	menu.clear();
