@@ -1,7 +1,6 @@
 extends ScrollContainer
 
-export var width_mm: int = 602;
-export var height_mm: int = 442;
+export var size_mm: Vector2 = Vector2(602, 442);
 
 var size: Vector2 = Vector2.ZERO;
 var compass_visible: bool = false;
@@ -24,9 +23,10 @@ var common = load("res://school_items.gd").new("Nautical Chart");
 func _ready():
 	size = get_viewport_rect().size;
 	print("Size: " + str(size));
-	var texture = $TextureRect.get_size();
-	$TextureRect.set_position(Vector2(-texture.x / 2, size.y / 2)); 
-	$TextureRect.set_position(Vector2(-1000, -1000)); 
+
+	var scale_factor: Vector2 = $TextureRect.get_size();
+	scale_factor = Vector2(scale_factor.x / size_mm.x, scale_factor.y / size_mm.y);
+	$protractor.set_scale_factor(scale_factor);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.	
 func _input(ev):
@@ -193,7 +193,9 @@ func _process(delta):
 		var texture = $TextureRect.get_size() / 2;
 		var this_size = size / 2;
 		$TextureRect.set_position(this_size - texture);
+		
 		is_first = false;
+		
 
 	if common.get_moving(): move_it();
 	
