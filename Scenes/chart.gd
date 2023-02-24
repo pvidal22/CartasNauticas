@@ -13,6 +13,7 @@ enum Popup_options {\
 	MOVE_CHART \
 	, SHOW_COMPASS, HIDE_COMPASS\
 	, SHOW_PROTRACTOR, HIDE_PROTRACTOR, MOVE_PROTRACTOR, TURN_PROTRACTOR, FLIP_PROTRACTOR\
+	, SHOW_PENCIL, HIDE_PENCIL, MOVE_PENCIL, FLIP_PENCIL \
 	, SHOW_TRIANGLE, HIDE_TRIANGLE\
 	, CANCEL\
 	, QUIT_YES, QUIT_NO};
@@ -97,21 +98,30 @@ func _on_popup_menu_id_pressed(id):
 			$compass.visible = false;
 		Popup_options.SHOW_COMPASS:
 			$compass.visible = true;
+		Popup_options.SHOW_PROTRACTOR:
+			$protractor.visible = true;
 		Popup_options.HIDE_PROTRACTOR:
 			$protractor.visible = false;
 			$protractor.stop_it();
-		Popup_options.SHOW_PROTRACTOR:
-			$protractor.visible = true;
+		Popup_options.MOVE_PROTRACTOR:
+			$protractor.start_moving();
 		Popup_options.TURN_PROTRACTOR:
 			$protractor.start_turning();
 		Popup_options.FLIP_PROTRACTOR:
 			$protractor.flip_it();
-		Popup_options.MOVE_PROTRACTOR:
-			$protractor.start_moving();
-		Popup_options.HIDE_TRIANGLE:
-			$triangle_ruler.visible = false;
+		Popup_options.SHOW_PENCIL:
+			$pencil.visible = true;
+		Popup_options.HIDE_PENCIL:
+			$pencil.visible = false;
+			$pencil.stop_it();
+		Popup_options.MOVE_PENCIL:
+			$pencil.start_moving();
+		Popup_options.FLIP_PENCIL:
+			$pencil.flip_it();
 		Popup_options.SHOW_TRIANGLE:
 			$triangle_ruler.visible = true;
+		Popup_options.HIDE_TRIANGLE:
+			$triangle_ruler.visible = false;
 		Popup_options.MOVE_CHART:
 			move_chart();
 		Popup_options.QUIT_NO:
@@ -166,14 +176,12 @@ func _on_pencil_menu_pressed():
 	var menu = $options_menu/pencil_menu.get_popup();
 	menu.clear();
 	
-	need to implement a pencil object
-	if not $protractor.visible:
-		menu.add_item("Mostrar transportador", Popup_options.SHOW_PROTRACTOR);
+	if not $pencil.visible:
+		menu.add_item("Mostrar lápiz", Popup_options.SHOW_PENCIL);
 	else:
-		menu.add_item("Ocultar transportador", Popup_options.HIDE_PROTRACTOR);
-		menu.add_item("Mover transportador", Popup_options.MOVE_PROTRACTOR);
-		menu.add_item("Girar transportador", Popup_options.TURN_PROTRACTOR);
-		menu.add_item("Voltear transportador", Popup_options.FLIP_PROTRACTOR);
+		menu.add_item("Ocultar lápiz", Popup_options.HIDE_PENCIL);
+		menu.add_item("Mover lápiz", Popup_options.MOVE_PENCIL);
+		menu.add_item("Voltear lápìz", Popup_options.FLIP_PENCIL);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 

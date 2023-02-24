@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pencil.png-ab62cd104fd1b341a5965564f6719b44.stex"
+path="res://.import/compas-removebg-preview.png-0eea6da687025fae97293a45e13e7109.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/pencil.png"
-dest_files=[ "res://.import/pencil.png-ab62cd104fd1b341a5965564f6719b44.stex" ]
+source_file="res://compas-removebg-preview.png"
+dest_files=[ "res://.import/compas-removebg-preview.png-0eea6da687025fae97293a45e13e7109.stex" ]
 
 [params]
 

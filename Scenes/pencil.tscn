@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 27.1662
+
+[node name="pencil" type="Area2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 116, 225.938 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -55, 507 )
+shape = SubResource( 1 )
