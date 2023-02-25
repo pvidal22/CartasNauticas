@@ -1,8 +1,4 @@
 extends Node
-var compass_visible: bool = false;
-var protractor_visible: bool = false;
-var triangle_rule_visible: bool = false;
-var previous_mouse_position: Vector2 = Vector2.ZERO;
 
 var common = load("res://Scripts/common.gd").new("Main");
 
@@ -11,9 +7,14 @@ func _ready():
 	# To center it.
 	var this_screen_size = OS.get_screen_size(-1);
 	var this_window_size = OS.get_window_size();
-	OS.set_window_position(this_screen_size*0.5 - this_window_size*0.5)
+	OS.set_window_position(this_screen_size*0.5 - this_window_size*0.5);
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.	
+	var scale_factor = $chart.texture.get_size();
+	print("Chart size:" + str(scale_factor));
+	scale_factor = Vector2(scale_factor.x / $chart.size_mm.x, scale_factor.y / $chart.size_mm.y);
+	print("Scale:" + str(scale_factor));
+	$protractor.set_scale_factor(scale_factor);
+
 func _input(ev):
 	if ev is InputEventMouseButton:
 		ev = ev as InputEventMouseButton
@@ -26,16 +27,18 @@ func _input(ev):
 		if ev.button_index == 1 and ev.doubleclick:
 			print("Stop all");
 			common.stop_it();
+			$chart.stop_it();
 			$protractor.stop_it();
-			#$compass.stop_it();
-			#$triangle_ruler.stop_it();
+#			$compass.stop_it();
+#			$triangle_ruler.stop_it();
+			$pencil.stop_it()
 
 func _on_options_menu_option_pressed(id):
 	match id:
-		common.Popup_options.HIDE_COMPASS:
-			$compass.visible = false;
 		common.Popup_options.SHOW_COMPASS:
 			$compass.visible = true;
+		common.Popup_options.HIDE_COMPASS:
+			$compass.visible = false;
 		common.Popup_options.SHOW_PROTRACTOR:
 			$protractor.visible = true;			
 			$options_menu.set_visibility(common.Item_types.PROTRACTOR, true);
@@ -65,8 +68,7 @@ func _on_options_menu_option_pressed(id):
 		common.Popup_options.HIDE_TRIANGLE:
 			$triangle_ruler.visible = false;
 		common.Popup_options.MOVE_CHART:
-			pass;
-			#move_chart();
+			$chart.start_moving();
 		common.Popup_options.QUIT_NO:
 			pass;
 		common.Popup_options.QUIT_YES:

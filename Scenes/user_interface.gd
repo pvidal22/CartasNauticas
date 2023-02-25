@@ -53,7 +53,7 @@ func _on_triangle_menu_pressed():
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_chart_menu_pressed():
-	var menu = $carta_menu.get_popup();
+	var menu = $chart_menu.get_popup();
 	menu.clear();
 	menu.add_item("Mover carta náutica", common.Popup_options.MOVE_CHART);
 	

@@ -44,10 +44,10 @@ func stop_it():
 
 func move_it(current_position, canvas_size, item_size):
 	var position := \
-		Vector2(current_position.x - item_size.x / 2, current_position.y - item_size.y / 2)
+		Vector2(current_position.x, current_position.y)
 	
-	position.x = clamp(position.x, 0, canvas_size.x - item_size.x);
-	position.y = clamp(position.y, 0, canvas_size.y - item_size.y);
+	position.x = clamp(position.x, 0, canvas_size.x);
+	position.y = clamp(position.y, 0, canvas_size.y);
 	self.latest_position = position;
 
 func turn_it():
