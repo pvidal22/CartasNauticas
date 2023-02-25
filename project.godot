@@ -12,7 +12,8 @@ config_version=4
 
 config/name="CartasNauticas"
 run/main_scene="res://Scenes/chart.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://images/carta_de_navegacion.png"
+config/icon="res://images/compass.png"
 
 [global]
 

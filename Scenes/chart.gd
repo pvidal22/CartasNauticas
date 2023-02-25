@@ -1,4 +1,4 @@
-extends ScrollContainer
+extends TextureRect
 
 export var size_mm: Vector2 = Vector2(602, 442);
 
@@ -25,7 +25,7 @@ func _ready():
 	size = get_viewport_rect().size;
 	print("Size: " + str(size));
 
-	var scale_factor: Vector2 = $TextureRect.get_size();
+	var scale_factor: Vector2 = get_size();
 	scale_factor = Vector2(scale_factor.x / size_mm.x, scale_factor.y / size_mm.y);
 	$protractor.set_scale_factor(scale_factor);
 
@@ -198,9 +198,9 @@ func move_chart():
 	
 func _process(delta):
 	if is_first:		
-		var texture = $TextureRect.get_size() / 2;
+		var texture = get_size() / 2;
 		var this_size = size / 2;
-		$TextureRect.set_position(this_size - texture);
+		set_position(this_size - texture);
 		
 		is_first = false;
 		

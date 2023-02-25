@@ -1,0 +1,52 @@
+[gd_scene format=2]
+
+[node name="options_menu" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="chart_menu" type="MenuButton" parent="."]
+margin_right = 96.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Carta Náutica"
+flat = false
+
+[node name="compass_menu" type="MenuButton" parent="."]
+margin_left = 100.0
+margin_right = 163.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Compas"
+flat = false
+
+[node name="protractor_menu" type="MenuButton" parent="."]
+margin_left = 167.0
+margin_right = 342.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Transportador de Ángulos"
+flat = false
+
+[node name="triangle_menu" type="MenuButton" parent="."]
+margin_left = 346.0
+margin_right = 414.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Cartabón"
+flat = false
+
+[node name="pencil_menu" type="MenuButton" parent="."]
+margin_left = 418.0
+margin_right = 463.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Lápiz"
+flat = false
+
+[node name="quit_menu" type="MenuButton" parent="."]
+margin_left = 467.0
+margin_right = 506.0
+margin_bottom = 40.0
+focus_mode = 2
+text = "Salir"
+flat = false
