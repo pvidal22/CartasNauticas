@@ -2,7 +2,7 @@ extends Area2D
 
 export var size_mm := Vector2(100, 100);
 
-var common = load("res://school_items.gd").new("Protractor");
+var common = load("res://Scripts/common.gd").new("Protractor");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
