@@ -11,9 +11,9 @@ config_version=4
 [application]
 
 config/name="CartasNauticas"
-run/main_scene="res://Scenes/chart.tscn"
-boot_splash/image="res://images/carta_de_navegacion.png"
-config/icon="res://images/compass.png"
+run/main_scene="res://Scenes/main.tscn"
+boot_splash/image="res://images/entry_image.png"
+config/icon="res://images/entry_image.png"
 
 [global]
 
