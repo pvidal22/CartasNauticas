@@ -13,13 +13,17 @@ func _process(_delta):
 	if common.get_moving(): move_it();
 	if common.get_turning(): turn_it();
 	common.display(self);	
+
+func _physics_process(_delta):
+	return;
+	if get_overlapping_areas().size() > 0 :
+		print("Overlap pencil: " + str(get_overlapping_areas()));
 	
 func start_turning():
 	common.start_turning();
 	
 func start_moving():
-	# Moving the mouse to the tip pencil position.
-	get_viewport().warp_mouse(self.get_position() );
+	get_viewport().warp_mouse(get_position() );
 	common.start_moving(get_viewport().get_mouse_position());
 	
 func stop_it():
@@ -31,23 +35,12 @@ func move_it():
 		Vector2($Sprite.texture.get_size().x, $Sprite.texture.get_size().y));
 
 func turn_it():
-	common.turn_it();
+	common.turn_it(get_viewport().get_mouse_position());
 	
 func flip_it():	
 	common.flip_it($Sprite)
-	
-func set_scale_factor(canvas_scale_factor: Vector2):
-	var scale_factor: Vector2 = $TextureRect.get_size();
-	scale_factor = Vector2(scale_factor.x / size_mm.x, scale_factor.y / size_mm.y);
-	print("Factors:  " + str(canvas_scale_factor) + ";" + str(scale_factor));
-#	self.scale.x = canvas_scale_factor.x / scale_factor.x;
-#	self.scale.y = canvas_scale_factor.y / scale_factor.y;
 
-	$TextureRect.rect_scale.x = canvas_scale_factor.x / scale_factor.x;
-	$TextureRect.rect_scale.y = canvas_scale_factor.y / scale_factor.y;
-	
-#func _input(ev: InputEvent):
-#	if ev is InputEventMouseButton:
-#		ev = ev as InputEventMouseButton;
-#		if ev.button_index == 1 and ev.doubleclick:
-#			stop_it();
+func _on_pencil_area_entered(area):
+	if not visible or not area.visible:
+		return;
+	print("Pencil Area entering: " + str(area.get_name()));

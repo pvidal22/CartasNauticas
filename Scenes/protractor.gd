@@ -14,6 +14,11 @@ func _process(_delta):
 	if common.get_turning(): turn_it();
 	common.display(self);	
 	
+func _physics_process(_delta):
+	return;
+	if get_overlapping_areas().size() > 0:
+		print("Overlap protractor: " + str(get_overlapping_areas()));
+
 func start_turning():
 	common.start_turning();
 	
@@ -30,7 +35,7 @@ func move_it():
 		Vector2($Sprite.texture.get_size().x * $Sprite.scale.x\
 			, $Sprite.texture.get_size().y * $Sprite.scale.y));
 
-func turn_it():	
+func turn_it():
 	common.turn_it(get_viewport().get_mouse_position());
 	
 func flip_it():
@@ -41,9 +46,8 @@ func set_scale_factor(chart_scale_factor: Vector2):
 	scale_factor = Vector2(chart_scale_factor.x * size_mm.x / scale_factor.x \
 		, chart_scale_factor.y * size_mm.y / scale_factor.y);
 	scale = scale_factor;	
-	
-#func _input(ev: InputEvent):
-#	if ev is InputEventMouseButton:
-#		ev = ev as InputEventMouseButton;
-#		if ev.button_index == 1 and ev.doubleclick:
-#			stop_it();
+
+func _on_protractor_area_entered(area:Area2D):
+	if not visible or not area.visible:
+		return;
+	print("Protractor Area entering: " + str(area.get_name()));

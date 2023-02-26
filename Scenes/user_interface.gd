@@ -38,7 +38,7 @@ func _on_protractor_menu_pressed():
 		menu.add_item("Ocultar transportador", common.Popup_options.HIDE_PROTRACTOR);
 		menu.add_item("Mover transportador", common.Popup_options.MOVE_PROTRACTOR);
 		menu.add_item("Girar transportador", common.Popup_options.TURN_PROTRACTOR);
-		menu.add_item("Voltear transportador", common.Popup_options.FLIP_PROTRACTOR);
+		#menu.add_item("Voltear transportador", common.Popup_options.FLIP_PROTRACTOR);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
@@ -68,7 +68,8 @@ func _on_pencil_menu_pressed():
 	else:
 		menu.add_item("Ocultar lápiz", common.Popup_options.HIDE_PENCIL);
 		menu.add_item("Mover lápiz", common.Popup_options.MOVE_PENCIL);
-		menu.add_item("Voltear lápìz", common.Popup_options.FLIP_PENCIL);
+		menu.add_item("Girar lápìz", common.Popup_options.TURN_PENCIL);
+		#menu.add_item("Girar lápìz", common.Popup_options.FLIP_PENCIL);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 

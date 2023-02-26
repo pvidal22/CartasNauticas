@@ -10,9 +10,7 @@ func _ready():
 	OS.set_window_position(this_screen_size*0.5 - this_window_size*0.5);
 
 	var scale_factor = $chart.texture.get_size();
-	print("Chart size:" + str(scale_factor));
 	scale_factor = Vector2(scale_factor.x / $chart.size_mm.x, scale_factor.y / $chart.size_mm.y);
-	print("Scale:" + str(scale_factor));
 	$protractor.set_scale_factor(scale_factor);
 
 func _input(ev):
@@ -61,6 +59,8 @@ func _on_options_menu_option_pressed(id):
 			$options_menu.set_visibility(common.Item_types.PENCIL, false);
 		common.Popup_options.MOVE_PENCIL:
 			$pencil.start_moving();
+		common.Popup_options.TURN_PENCIL:
+			$pencil.start_turning();
 		common.Popup_options.FLIP_PENCIL:
 			$pencil.flip_it();
 		common.Popup_options.SHOW_TRIANGLE:
