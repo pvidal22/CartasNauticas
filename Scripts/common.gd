@@ -13,7 +13,7 @@ var turning: bool = false;
 var moving: bool = false;
 var item_target_position: Vector2 = Vector2.ZERO;
 var movement_vector: Vector2 = Vector2.ZERO;
-var angle_rotation := 0;
+var angle_rotation = null;
 var item_name: String = "";
 var flip_position := 0;
 var movement_speed = 500;
@@ -28,7 +28,8 @@ func get_turning() -> bool:
 	return turning;
 
 func display(item):
-	item.rotation_degrees = angle_rotation;
+	if angle_rotation != null:
+		item.rotation_degrees = angle_rotation;
 	if get_moving():
 		var distance = item_target_position - item.get_position();
 		distance = distance.length();
