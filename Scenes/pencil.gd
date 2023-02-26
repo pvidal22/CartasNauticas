@@ -14,11 +14,6 @@ func _process(_delta):
 	if common.get_turning(): turn_it();
 	common.display(self);	
 
-func _physics_process(_delta):
-	return;
-	if get_overlapping_areas().size() > 0 :
-		print("Overlap pencil: " + str(get_overlapping_areas()));
-	
 func start_turning():
 	common.start_turning();
 	
@@ -43,4 +38,9 @@ func flip_it():
 func _on_pencil_area_entered(area):
 	if not visible or not area.visible:
 		return;
-	print("Pencil Area entering: " + str(area.get_name()));
+	common.add_collision_area(area.get_name());
+
+func _on_pencil_area_exited(area):
+	if not visible or not area.visible:
+		return;
+	common.remove_collision_area(area.get_name());

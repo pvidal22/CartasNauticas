@@ -14,11 +14,6 @@ func _process(_delta):
 	if common.get_turning(): turn_it();
 	common.display(self);	
 	
-func _physics_process(_delta):
-	return;
-	if get_overlapping_areas().size() > 0:
-		print("Overlap protractor: " + str(get_overlapping_areas()));
-
 func start_turning():
 	common.start_turning();
 	

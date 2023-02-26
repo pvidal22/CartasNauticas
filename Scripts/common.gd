@@ -18,6 +18,7 @@ var latest_position: Vector2 = Vector2.ZERO;
 var angle_rotation := 0;
 var item_name: String = "";
 var flip_position := 0;
+var collision_items: Array = [];
 
 func _init(p_item_name: String):
 	self.item_name = p_item_name; 
@@ -52,7 +53,11 @@ func move_it(current_position, canvas_size, _item_size: Vector2 = Vector2.ZERO):
 	
 	position.x = clamp(position.x, 0, canvas_size.x);
 	position.y = clamp(position.y, 0, canvas_size.y);
+	# Do not know how to prevent movement in one direction, and not in the other.!!!
+	if collision_items.size() > 0:
+		return;
 	self.latest_position = position;
+
 
 func turn_it(mouse_position: Vector2):
 	var shift := mouse_position - previous_mouse_position;
@@ -139,7 +144,18 @@ func flip_it(item):
 		3:
 			item.flip_h = false;
 			item.flip_v = true;
-	
+
+func add_collision_area(area_name: String):
+	if area_name in collision_items:
+		return;
+	collision_items.append(area_name);
+	print("Collision_items: " + str(collision_items));
+
+func remove_collision_area(area_name: String):
+	while area_name in collision_items:
+		collision_items.erase(area_name);
+	print("Collision_items: " + str(collision_items));
+
 func _input(ev: InputEvent):
 	if ev is InputEventMouseButton:
 		ev = ev as InputEventMouseButton;
