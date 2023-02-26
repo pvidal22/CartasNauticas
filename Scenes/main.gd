@@ -38,10 +38,12 @@ func _on_options_menu_option_pressed(id):
 		common.Popup_options.HIDE_COMPASS:
 			$compass.visible = false;
 		common.Popup_options.SHOW_PROTRACTOR:
-			$protractor.visible = true;			
+			$protractor.visible = true;
+			$protractor/Collision_shape.disabled = false;
 			$options_menu.set_visibility(common.Item_types.PROTRACTOR, true);
 		common.Popup_options.HIDE_PROTRACTOR:
 			$protractor.visible = false;
+			$protractor/Collision_shape.disabled = true;
 			$protractor.stop_it();
 			$options_menu.set_visibility(common.Item_types.PROTRACTOR, false);
 		common.Popup_options.MOVE_PROTRACTOR:
@@ -52,9 +54,11 @@ func _on_options_menu_option_pressed(id):
 			$protractor.flip_it();
 		common.Popup_options.SHOW_PENCIL:
 			$pencil.visible = true;
+			$pencil/Collision_shape.disabled = false;
 			$options_menu.set_visibility(common.Item_types.PENCIL, true);
 		common.Popup_options.HIDE_PENCIL:
 			$pencil.visible = false;
+			$pencil/Collision_shape.disabled = true;
 			$pencil.stop_it();
 			$options_menu.set_visibility(common.Item_types.PENCIL, false);
 		common.Popup_options.MOVE_PENCIL:

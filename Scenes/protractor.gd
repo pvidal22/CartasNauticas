@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 export var size_mm := Vector2(100, 100);
 
@@ -6,32 +6,30 @@ var common = load("res://Scripts/common.gd").new("Protractor");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass;
+	$Collision_shape.disabled = true;
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process(delta):
 	if common.get_moving(): move_it();
 	if common.get_turning(): turn_it();
-	common.display(self);	
+	common.display(self, delta);	
 	
 func start_turning():
 	common.start_turning();
 	
 func start_moving():
 	get_viewport().warp_mouse(get_position());
-	common.start_moving(get_viewport().get_mouse_position());
+	common.start_moving();
 	
 func stop_it():
 	common.stop_it();
 	
 func move_it():
-	common.move_it(get_viewport().get_mouse_position()\
-		, get_viewport_rect().size, \
-		Vector2($Sprite.texture.get_size().x * $Sprite.scale.x\
-			, $Sprite.texture.get_size().y * $Sprite.scale.y));
+	common.move_it(get_position(), get_viewport().get_mouse_position()\
+		, get_viewport_rect().size);
 
 func turn_it():
-	common.turn_it(get_viewport().get_mouse_position());
+	common.turn_it(get_position(), get_viewport().get_mouse_position());
 	
 func flip_it():
 	common.flip_it($TextureRect)

@@ -14,11 +14,13 @@ enum Quadrant {ONE, TWO, THREE, FOUR}; # Clockwise from 0 to 360.
 var turning: bool = false;
 var moving: bool = false;
 var previous_mouse_position: Vector2 = Vector2.ZERO;
-var latest_position: Vector2 = Vector2.ZERO;
+var item_target_position: Vector2 = Vector2.ZERO;
+var movement_vector: Vector2 = Vector2.ZERO;
 var angle_rotation := 0;
 var item_name: String = "";
 var flip_position := 0;
 var collision_items: Array = [];
+var movement_speed = 500;
 
 func _init(p_item_name: String):
 	self.item_name = p_item_name; 
@@ -29,42 +31,48 @@ func get_moving() -> bool:
 func get_turning() -> bool:
 	return turning;
 
-func display(item):
-	item.set_position(latest_position);
-	item.rotation_degrees = angle_rotation;
+func display(item, delta):
+	item.rotation_degrees = angle_rotation;	
+	if get_moving():
+		var distance = item_target_position - item.get_position();
+		distance = distance.length();
+		var this_movement_speed = movement_speed;
+		if distance < 10:
+			this_movement_speed = 10;
+		var v = get_movement_vector() * this_movement_speed;
+		item.move_and_slide(v)
+
+func get_movement_vector() -> Vector2:
+	return self.movement_vector;
 	
 func start_turning():
 	turning = true;
 	moving = false;
 	
-func start_moving(initial_position):
+func start_moving():
 	turning = false;
-	moving = true;
-	latest_position = initial_position;
+	moving = true;	
 	
 func stop_it():
 	turning = false;
 	moving = false;
 	print(str(OS.get_time()) + ". Stop " + item_name);
 
-func move_it(current_position, canvas_size, _item_size: Vector2 = Vector2.ZERO):
-	var position := \
-		Vector2(current_position.x, current_position.y)
-	
-	position.x = clamp(position.x, 0, canvas_size.x);
-	position.y = clamp(position.y, 0, canvas_size.y);
-	# Do not know how to prevent movement in one direction, and not in the other.!!!
-	if collision_items.size() > 0:
-		return;
-	self.latest_position = position;
+func move_it(current_position: Vector2, target_position: Vector2, canvas_size: Vector2):
+	target_position.x = clamp(target_position.x, 0, canvas_size.x);
+	target_position.y = clamp(target_position.y, 0, canvas_size.y);
+	if target_position == current_position:		
+		movement_vector = Vector2.ZERO;
+	else:
+		movement_vector = current_position.direction_to(target_position); # (target-current).normalized()		
+	item_target_position = target_position;
 
-
-func turn_it(mouse_position: Vector2):
+func turn_it(current_position, mouse_position: Vector2):
 	var shift := mouse_position - previous_mouse_position;
 	if shift == Vector2.ZERO:
 		return;
 
-	var quadrant = mouse_position - latest_position;
+	var quadrant = mouse_position - current_position;
 	if quadrant.x == 0 or quadrant.y == 0:
 		return;
 
