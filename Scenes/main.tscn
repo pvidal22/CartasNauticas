@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/main.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/protactor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/pencil.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/triangle_ruler.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/compass.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/compass.tscn" type="PackedScene" id=7]
 
 [node name="main" type="Node"]
