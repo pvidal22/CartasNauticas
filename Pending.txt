@@ -2,7 +2,7 @@ Poner los cartabones y el resto de cosas debajo de collissions... sólo para hac
 No intentar controlarlo por código porque se puede poner cualquier lado de la imagen... y eso sería un rollo
 Hacer algo para cambiar el tipo de los objetos... y sobretodo... mirar de mover fácilmente la carta
 
-Hacer el turning del transportador... asegurarme que el colisión va bien... luego hacer las opciones de 0, 90 180 y 270... y ponerme con el lápiz
+Ponerme con el lápiz
 Ha de hacer el lápiz y mirar de ver si funciona lo de la colisión, sobretodo con la mierda de las escalas
 
 

@@ -30,8 +30,8 @@ func move_it():
 		Vector2($Sprite.texture.get_size().x * $Sprite.scale.x\
 			, $Sprite.texture.get_size().y * $Sprite.scale.y));
 
-func turn_it():
-	common.turn_it();
+func turn_it():	
+	common.turn_it(get_viewport().get_mouse_position());
 	
 func flip_it():
 	common.flip_it($TextureRect)

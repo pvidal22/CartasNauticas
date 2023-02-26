@@ -8,11 +8,14 @@ enum Popup_options {\
 	, QUIT_YES, QUIT_NO};
 
 enum Item_types {PROTRACTOR, COMPASS, PENCIL, TRIANGLE};
+enum Rotation {CLOCK, COUNTER_CLOCK};
+enum Quadrant {ONE, TWO, THREE, FOUR}; # Clockwise from 0 to 360.
 
 var turning: bool = false;
 var moving: bool = false;
 var previous_mouse_position: Vector2 = Vector2.ZERO;
 var latest_position: Vector2 = Vector2.ZERO;
+var angle_rotation := 0;
 var item_name: String = "";
 var flip_position := 0;
 
@@ -27,6 +30,7 @@ func get_turning() -> bool:
 
 func display(item):
 	item.set_position(latest_position);
+	item.rotation_degrees = angle_rotation;
 	
 func start_turning():
 	turning = true;
@@ -42,7 +46,7 @@ func stop_it():
 	moving = false;
 	print(str(OS.get_time()) + ". Stop " + item_name);
 
-func move_it(current_position, canvas_size, item_size):
+func move_it(current_position, canvas_size, _item_size: Vector2 = Vector2.ZERO):
 	var position := \
 		Vector2(current_position.x, current_position.y)
 	
@@ -50,8 +54,74 @@ func move_it(current_position, canvas_size, item_size):
 	position.y = clamp(position.y, 0, canvas_size.y);
 	self.latest_position = position;
 
-func turn_it():
-	print(str(OS.get_time()) + ". Turn it");
+func turn_it(mouse_position: Vector2):
+	var shift := mouse_position - previous_mouse_position;
+	if shift == Vector2.ZERO:
+		return;
+
+	var quadrant = mouse_position - latest_position;
+	if quadrant.x == 0 or quadrant.y == 0:
+		return;
+
+	if quadrant.x > 0 and quadrant.y < 0:
+		quadrant = Quadrant.ONE;
+	elif quadrant.x > 0 and quadrant.y > 0:
+		quadrant = Quadrant.TWO;
+	elif quadrant.x < 0 and quadrant.y > 0:
+		quadrant = Quadrant.THREE;
+	elif quadrant.x < 0 and quadrant.y < 0:
+		quadrant = Quadrant.FOUR;
+		
+	var rotation = Rotation.COUNTER_CLOCK;
+	if quadrant == Quadrant.ONE:
+		if shift.x == 0:
+			if shift.y > 0:
+				rotation = Rotation.CLOCK;
+		elif shift.x > 0 and shift.y > 0:
+			rotation = Rotation.CLOCK;
+		elif shift.y == 0:
+			if shift.x > 0:
+				rotation = Rotation.CLOCK;
+
+	if quadrant == Quadrant.TWO:
+		if shift.x == 0:
+			if shift.y > 0:
+				rotation = Rotation.CLOCK;
+		elif shift.x < 0 and shift.y > 0:
+			rotation = Rotation.CLOCK;
+		elif shift.y == 0:
+			if shift.x < 0:
+				rotation = Rotation.CLOCK;
+			
+	if quadrant == Quadrant.THREE:
+		if shift.x == 0:
+			if shift.y < 0:
+				rotation = Rotation.CLOCK;
+		elif shift.x < 0 and shift.y < 0:
+			rotation = Rotation.CLOCK;
+		elif shift.y == 0:
+			if shift.x < 0:
+				rotation = Rotation.CLOCK;
+			
+	if quadrant == Quadrant.FOUR:
+		if shift.x == 0:
+			if shift.y < 0:
+				rotation = Rotation.CLOCK;
+		elif shift.x > 0 and shift.y < 0:
+			rotation = Rotation.CLOCK;
+		elif shift.y == 0:
+			if shift.x > 0:
+				rotation = Rotation.CLOCK;
+	
+	if rotation == Rotation.CLOCK:
+		angle_rotation += 1;
+	else:
+		angle_rotation -= 1;
+
+	if angle_rotation < 1: angle_rotation = angle_rotation + 360;
+	if angle_rotation > 360: angle_rotation = angle_rotation - 360;
+
+	previous_mouse_position = mouse_position;
 	
 func flip_it(item):
 	self.flip_position += 1;
