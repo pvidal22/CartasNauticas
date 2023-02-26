@@ -1,11 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/protactor.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/triangle_ruler.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/compass.tscn" type="PackedScene" id=3]
 [ext_resource path="res://images/carta_de_navegacion.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/chart.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/pencil.tscn" type="PackedScene" id=6]
 
 [node name="chart" type="TextureRect"]
 anchor_left = 0.5
@@ -18,21 +14,3 @@ margin_right = 1169.5
 margin_bottom = 826.5
 texture = ExtResource( 4 )
 script = ExtResource( 5 )
-size_mm = null
-
-[node name="compass" parent="." instance=ExtResource( 3 )]
-visible = false
-margin_right = 0.0
-margin_bottom = 0.0
-
-[node name="protractor" parent="." instance=ExtResource( 1 )]
-visible = false
-
-[node name="triangle_ruler" parent="." instance=ExtResource( 2 )]
-visible = false
-margin_right = 500.0
-margin_bottom = 500.0
-
-[node name="pencil" parent="." instance=ExtResource( 6 )]
-visible = false
-size_mm = Vector2( 10, 10 )

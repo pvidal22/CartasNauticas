@@ -14,7 +14,8 @@ func _ready():
 
 
 func start_moving():
-	common.start_moving(get_viewport().get_mouse_position());
+	#common.start_moving(get_viewport().get_mouse_position());
+	common.start_moving();
 
 func stop_it():
 	common.stop_it();

@@ -49,6 +49,9 @@ func _on_triangle_menu_pressed():
 		menu.add_item("Mostrar cartabón", common.Popup_options.SHOW_TRIANGLE);
 	else:
 		menu.add_item("Ocultar cartabón", common.Popup_options.HIDE_TRIANGLE);
+		menu.add_item("Mover cartabón", common.Popup_options.MOVE_TRIANGLE);
+		menu.add_item("Girar cartabón", common.Popup_options.TURN_TRIANGLE);
+		#menu.add_item("Voltear cartabón", common.Popup_options.FLIP_TRIANGLE);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
@@ -68,8 +71,8 @@ func _on_pencil_menu_pressed():
 	else:
 		menu.add_item("Ocultar lápiz", common.Popup_options.HIDE_PENCIL);
 		menu.add_item("Mover lápiz", common.Popup_options.MOVE_PENCIL);
-		menu.add_item("Girar lápìz", common.Popup_options.TURN_PENCIL);
-		#menu.add_item("Girar lápìz", common.Popup_options.FLIP_PENCIL);
+		menu.add_item("Girar lápiz", common.Popup_options.TURN_PENCIL);
+		#menu.add_item("Voltear lápìz", common.Popup_options.FLIP_PENCIL);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 

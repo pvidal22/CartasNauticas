@@ -12,6 +12,7 @@ func _ready():
 	var scale_factor = $chart.texture.get_size();
 	scale_factor = Vector2(scale_factor.x / $chart.size_mm.x, scale_factor.y / $chart.size_mm.y);
 	$protractor.set_scale_factor(scale_factor);
+	$triangle.set_scale_factor(scale_factor);
 
 func _input(ev):
 	if ev is InputEventMouseButton:
@@ -28,7 +29,7 @@ func _input(ev):
 			$chart.stop_it();
 			$protractor.stop_it();
 #			$compass.stop_it();
-#			$triangle_ruler.stop_it();
+			$triangle.stop_it();
 			$pencil.stop_it()
 
 func _on_options_menu_option_pressed(id):
@@ -68,9 +69,20 @@ func _on_options_menu_option_pressed(id):
 		common.Popup_options.FLIP_PENCIL:
 			$pencil.flip_it();
 		common.Popup_options.SHOW_TRIANGLE:
-			$triangle_ruler.visible = true;
+			$triangle.visible = true;
+			$triangle/Collision_shape.disabled = false;
+			$options_menu.set_visibility(common.Item_types.TRIANGLE, true);
 		common.Popup_options.HIDE_TRIANGLE:
-			$triangle_ruler.visible = false;
+			$triangle.visible = false;
+			$triangle/Collision_shape.disabled = true;
+			$triangle.stop_it();
+			$options_menu.set_visibility(common.Item_types.TRIANGLE, false);
+		common.Popup_options.MOVE_TRIANGLE:
+			$triangle.start_moving();
+		common.Popup_options.TURN_TRIANGLE:
+			$triangle.start_turning();
+		common.Popup_options.FLIP_TRIANGLE:
+			$triangle.flip_it();
 		common.Popup_options.MOVE_CHART:
 			$chart.start_moving();
 		common.Popup_options.QUIT_NO:

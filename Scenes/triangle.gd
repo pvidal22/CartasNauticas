@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-export var size_mm := Vector2(100, 100);
+export var size_mm := Vector2(250, 150);
 
-var common = load("res://Scripts/common.gd").new("Protractor");
+var common = load("res://Scripts/common.gd").new("Triangle");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,7 +32,7 @@ func turn_it():
 	common.turn_it(get_position(), get_viewport().get_mouse_position());
 	
 func flip_it():
-	common.flip_it($Sprite)
+	common.flip_it($Sprite);
 	
 func set_scale_factor(chart_scale_factor: Vector2):
 	var scale_factor: Vector2 = $Sprite.texture.get_size();

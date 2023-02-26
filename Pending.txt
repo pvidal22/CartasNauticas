@@ -2,8 +2,8 @@ Poner los cartabones y el resto de cosas debajo de collissions... sólo para hac
 No intentar controlarlo por código porque se puede poner cualquier lado de la imagen... y eso sería un rollo
 Hacer algo para cambiar el tipo de los objetos... y sobretodo... mirar de mover fácilmente la carta
 
-Tratando de detectar la colisión en caso de rotación....
+Tratando de detectar la colisión en caso de rotación.... NO lo he conseguido :-(
 
-Ha de hacer el lápiz y mirar de ver si funciona lo de la colisión, sobretodo con la mierda de las escalas
+He de mirar de hacer una línea con el pápiz cuando la apoyo con algo...
 
 
