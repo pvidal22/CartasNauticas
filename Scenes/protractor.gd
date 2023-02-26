@@ -9,10 +9,10 @@ func _ready():
 	$Collision_shape.disabled = true;
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(_delta):
 	if common.get_moving(): move_it();
 	if common.get_turning(): turn_it();
-	common.display(self, delta);	
+	common.display(self);	
 	
 func start_turning():
 	common.start_turning();

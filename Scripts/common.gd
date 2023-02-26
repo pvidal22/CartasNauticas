@@ -8,18 +8,14 @@ enum Popup_options {\
 	, QUIT_YES, QUIT_NO};
 
 enum Item_types {PROTRACTOR, COMPASS, PENCIL, TRIANGLE};
-enum Rotation {CLOCK, COUNTER_CLOCK};
-enum Quadrant {ONE, TWO, THREE, FOUR}; # Clockwise from 0 to 360.
 
 var turning: bool = false;
 var moving: bool = false;
-var previous_mouse_position: Vector2 = Vector2.ZERO;
 var item_target_position: Vector2 = Vector2.ZERO;
 var movement_vector: Vector2 = Vector2.ZERO;
 var angle_rotation := 0;
 var item_name: String = "";
 var flip_position := 0;
-var collision_items: Array = [];
 var movement_speed = 500;
 
 func _init(p_item_name: String):
@@ -31,8 +27,8 @@ func get_moving() -> bool:
 func get_turning() -> bool:
 	return turning;
 
-func display(item, delta):
-	item.rotation_degrees = angle_rotation;	
+func display(item):
+	item.rotation_degrees = angle_rotation;
 	if get_moving():
 		var distance = item_target_position - item.get_position();
 		distance = distance.length();
@@ -68,73 +64,9 @@ func move_it(current_position: Vector2, target_position: Vector2, canvas_size: V
 	item_target_position = target_position;
 
 func turn_it(current_position, mouse_position: Vector2):
-	var shift := mouse_position - previous_mouse_position;
-	if shift == Vector2.ZERO:
-		return;
-
-	var quadrant = mouse_position - current_position;
-	if quadrant.x == 0 or quadrant.y == 0:
-		return;
-
-	if quadrant.x > 0 and quadrant.y < 0:
-		quadrant = Quadrant.ONE;
-	elif quadrant.x > 0 and quadrant.y > 0:
-		quadrant = Quadrant.TWO;
-	elif quadrant.x < 0 and quadrant.y > 0:
-		quadrant = Quadrant.THREE;
-	elif quadrant.x < 0 and quadrant.y < 0:
-		quadrant = Quadrant.FOUR;
-		
-	var rotation = Rotation.COUNTER_CLOCK;
-	if quadrant == Quadrant.ONE:
-		if shift.x == 0:
-			if shift.y > 0:
-				rotation = Rotation.CLOCK;
-		elif shift.x > 0 and shift.y > 0:
-			rotation = Rotation.CLOCK;
-		elif shift.y == 0:
-			if shift.x > 0:
-				rotation = Rotation.CLOCK;
-
-	if quadrant == Quadrant.TWO:
-		if shift.x == 0:
-			if shift.y > 0:
-				rotation = Rotation.CLOCK;
-		elif shift.x < 0 and shift.y > 0:
-			rotation = Rotation.CLOCK;
-		elif shift.y == 0:
-			if shift.x < 0:
-				rotation = Rotation.CLOCK;
-			
-	if quadrant == Quadrant.THREE:
-		if shift.x == 0:
-			if shift.y < 0:
-				rotation = Rotation.CLOCK;
-		elif shift.x < 0 and shift.y < 0:
-			rotation = Rotation.CLOCK;
-		elif shift.y == 0:
-			if shift.x < 0:
-				rotation = Rotation.CLOCK;
-			
-	if quadrant == Quadrant.FOUR:
-		if shift.x == 0:
-			if shift.y < 0:
-				rotation = Rotation.CLOCK;
-		elif shift.x > 0 and shift.y < 0:
-			rotation = Rotation.CLOCK;
-		elif shift.y == 0:
-			if shift.x > 0:
-				rotation = Rotation.CLOCK;
-	
-	if rotation == Rotation.CLOCK:
-		angle_rotation += 1;
-	else:
-		angle_rotation -= 1;
-
-	if angle_rotation < 1: angle_rotation = angle_rotation + 360;
-	if angle_rotation > 360: angle_rotation = angle_rotation - 360;
-
-	previous_mouse_position = mouse_position;
+	var angle = (mouse_position - current_position).angle();#	var shift := mouse_position - previous_mouse_position;
+	angle = rad2deg(angle);
+	angle_rotation = angle + 90;
 	
 func flip_it(item):
 	self.flip_position += 1;
@@ -152,17 +84,6 @@ func flip_it(item):
 		3:
 			item.flip_h = false;
 			item.flip_v = true;
-
-func add_collision_area(area_name: String):
-	if area_name in collision_items:
-		return;
-	collision_items.append(area_name);
-	print("Collision_items: " + str(collision_items));
-
-func remove_collision_area(area_name: String):
-	while area_name in collision_items:
-		collision_items.erase(area_name);
-	print("Collision_items: " + str(collision_items));
 
 func _input(ev: InputEvent):
 	if ev is InputEventMouseButton:

@@ -8,10 +8,10 @@ var common = load("res://Scripts/common.gd").new("Pencil");
 func _ready():
 	$Collision_shape.disabled = true;
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	if common.get_moving(): move_it();
 	if common.get_turning(): turn_it();
-	common.display(self, delta);
+	common.display(self);
 
 func start_turning():
 	common.start_turning();
@@ -28,17 +28,7 @@ func move_it():
 		, get_viewport_rect().size);
 
 func turn_it():
-	common.turn_it(get_viewport().get_mouse_position());
+	common.turn_it(get_position(), get_viewport().get_mouse_position());
 	
 func flip_it():	
 	common.flip_it($Sprite)
-
-func _on_pencil_area_entered(area):
-	if not visible or not area.visible:
-		return;
-	common.add_collision_area(area.get_name());
-
-func _on_pencil_area_exited(area):
-	if not visible or not area.visible:
-		return;
-	common.remove_collision_area(area.get_name());
