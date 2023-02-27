@@ -4,6 +4,5 @@ Hacer algo para cambiar el tipo de los objetos... y sobretodo... mirar de mover 
 
 Tratando de detectar la colisión en caso de rotación.... NO lo he conseguido :-(
 
-He de mirar de hacer una línea con el pápiz cuando la apoyo con algo...
-
-
+He de hacer un zoom "bonito" (quizás con la ruedecilla del mouse).
+He de hacer que los drawing se muevan si muevo el mapa o cambio su tamaño.

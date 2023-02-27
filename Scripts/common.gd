@@ -2,7 +2,7 @@ enum Popup_options {\
 	MOVE_CHART \
 	, SHOW_COMPASS, HIDE_COMPASS\
 	, SHOW_PROTRACTOR, HIDE_PROTRACTOR, MOVE_PROTRACTOR, TURN_PROTRACTOR, FLIP_PROTRACTOR\
-	, SHOW_PENCIL, HIDE_PENCIL, MOVE_PENCIL, TURN_PENCIL, FLIP_PENCIL \
+	, SHOW_PENCIL, HIDE_PENCIL, MOVE_PENCIL, TURN_PENCIL, FLIP_PENCIL, DOT_PENCIL, LINE_PENCIL \
 	, SHOW_TRIANGLE, HIDE_TRIANGLE, MOVE_TRIANGLE, TURN_TRIANGLE, FLIP_TRIANGLE\
 	, CANCEL\
 	, QUIT_YES, QUIT_NO};
@@ -27,7 +27,7 @@ func get_moving() -> bool:
 func get_turning() -> bool:
 	return turning;
 
-func display(item):
+func display(item, delta) -> Array:
 	if angle_rotation != null:
 		item.rotation_degrees = angle_rotation;
 	if get_moving():
@@ -36,8 +36,12 @@ func display(item):
 		var this_movement_speed = movement_speed;
 		if distance < 10:
 			this_movement_speed = 10;
-		var v = get_movement_vector() * this_movement_speed;
-		item.move_and_slide(v)
+		var velocity = get_movement_vector() * this_movement_speed;
+		var collision = item.move_and_collide(velocity * delta);
+		if collision:			
+			return [Vector2(collision.position), collision.normal];
+			
+	return [];
 
 func get_movement_vector() -> Vector2:
 	return self.movement_vector;

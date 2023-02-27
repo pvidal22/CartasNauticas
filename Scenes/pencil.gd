@@ -3,16 +3,20 @@ extends KinematicBody2D
 export var size_mm := Vector2(10, 10);
 
 var common = load("res://Scripts/common.gd").new("Pencil");
+var normal_to_latest_collision: Vector2 = Vector2.ZERO;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
 	
-func _physics_process(_delta):
+func _physics_process(delta):
 	if common.get_moving(): move_it();
 	if common.get_turning(): turn_it();
-	common.display(self);
-
+	var result: Array = common.display(self, delta);
+	if not result.empty():
+		normal_to_latest_collision = result[1]
+		normal_to_latest_collision = Vector2(-normal_to_latest_collision.y, normal_to_latest_collision.x);
+	
 func start_turning():
 	common.start_turning();
 	
@@ -32,3 +36,6 @@ func turn_it():
 	
 func flip_it():	
 	common.flip_it($Sprite)
+	
+func get_line_normal_to_collision() -> Array:
+	return [get_position(), self.normal_to_latest_collision];
