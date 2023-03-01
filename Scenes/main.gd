@@ -20,9 +20,9 @@ func _input(ev):
 		if ev.pressed:
 			match ev.button_index:
 				BUTTON_WHEEL_UP:
-					print("up")
+					zoom_in();
 				BUTTON_WHEEL_DOWN:
-					print("down")
+					zoom_out();
 		if ev.button_index == 1 and ev.doubleclick:
 			print("Stop all");
 			common.stop_it();
@@ -109,7 +109,13 @@ func _on_options_menu_option_pressed(id):
 			get_tree().quit();
 		_:
 			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
+			
+func zoom_in():
+	print("Zoom in");
 	
+func zoom_out():
+	print("Zoom out");
+
 func test_functions():
 	$drawings.add_line(Vector2(0,0), Vector2(500, 500));
 	$drawings.add_circle(Vector2(500,500), 30.5);
