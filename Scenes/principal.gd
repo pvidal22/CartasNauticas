@@ -1,18 +1,18 @@
 extends Node
 
-var common = load("res://Scripts/common.gd").new("Main");
+var comu = load("res://Scripts/comu.gd").new("Principal");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# To center it.
-	var this_screen_size = OS.get_screen_size(-1);
-	var this_window_size = OS.get_window_size();
-	OS.set_window_position(this_screen_size*0.5 - this_window_size*0.5);
+	# Per centrar la imatge
+	var pantalla_tamany = OS.get_screen_size(-1);
+	var finestra_tamany = OS.get_window_size();
+	OS.set_window_position(pantalla_tamany * 0.5 - finestra_tamany * 0.5);
 
-	var scale_factor = $chart.texture.get_size();
-	scale_factor = Vector2(scale_factor.x / $chart.size_mm.x, scale_factor.y / $chart.size_mm.y);
-	$protractor.set_scale_factor(scale_factor);
-	$triangle.set_scale_factor(scale_factor);
+	var factor_escala = $carta.texture.get_size();
+	factor_escala = Vector2(factor_escala.x / $carta.tamany_mm.x, factor_escala.y / $carta.tamany_mm.y);
+	$transportador.set_factor_escala(factor_escala);
+	$cartabo.set_factor_escala(factor_escala);
 
 func _input(ev):
 	if ev is InputEventMouseButton:
@@ -20,17 +20,17 @@ func _input(ev):
 		if ev.pressed:
 			match ev.button_index:
 				BUTTON_WHEEL_UP:
-					zoom_in();
+					zoom_gran();
 				BUTTON_WHEEL_DOWN:
-					zoom_out();
+					zoom_petit();
 		if ev.button_index == 1 and ev.doubleclick:
-			print("Stop all");
-			common.stop_it();
-			$chart.stop_it();
-			$protractor.stop_it();
-#			$compass.stop_it();
-			$triangle.stop_it();
-			$pencil.stop_it()
+			print("Parar tot");
+			comu.parar();
+			$carta.parar();
+			$transportador.parar();
+#			$compas.parar();
+			$cartabo.parar();
+			$llapis.parar()
 
 func _on_options_menu_option_pressed(id):
 	match id:

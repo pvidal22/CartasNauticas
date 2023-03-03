@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/triangle.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/cartabo.gd" type="Script" id=1]
 [ext_resource path="res://images/cartabon-de-plastico.png" type="Texture" id=2]
+
 
 [node name="triangle" type="KinematicBody2D"]
 script = ExtResource( 1 )
