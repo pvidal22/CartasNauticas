@@ -1,5 +1,5 @@
-enum Popup_options {\
-	MOUSE_CARTA \
+enum Opcions_popup {\
+	MOURE_CARTA \
 	, MOSTRAR_COMPAS, AMAGAR_COMPAS\
 	, MOSTRAR_TRANSPORTADOR, AMAGAR_TRANSPORTADOR, MOURE_TRANSPORTADOR, GIRAR_TRANSPORTADOR, VOLTEJAR_TRANSPORTADOR\
 	, MOSTRAR_LLAPIS, AMAGAR_LLAPIS, MOURE_LLAPIS, GIRAR_LLAPIS, VOLTEJAR_LLAPIS, PUNT_LLAPIS, LINIA_LLAPIS \
@@ -7,7 +7,7 @@ enum Popup_options {\
 	, CANCELAR\
 	, SORTIR_SI, SORTIR_NO};
 
-enum Item_types {TRANSPORTADOR, COMPAS, LLAPIS, CARTABO};
+enum Tipus_objecte {TRANSPORTADOR, COMPAS, LLAPIS, CARTABO};
 
 var girant: bool = false;
 var movent: bool = false;
@@ -33,10 +33,10 @@ func mostrar(objecte, delta) -> Array:
 	if esta_movent():
 		var distancia = posicio_objectiu - objecte.get_position();
 		distancia = distancia.length();
-		var aqui_velocitat_moviment = velocitat_moviment;
+		var local_velocitat_moviment = velocitat_moviment;
 		if distancia < 10:
-			aqui_velocitat_moviment = 10;
-		var velocitat = obtenir_vector_moviment() * aqui_velocitat_moviment;
+			local_velocitat_moviment = 10;
+		var velocitat = obtenir_vector_moviment() * local_velocitat_moviment;
 		var colisio = objecte.move_and_collide(velocitat * delta);
 		if colisio:
 			return [Vector2(colisio.position), colisio.normal]; # Returnem la posició de la colisió i un vector perpendicular a la colisió
@@ -72,6 +72,9 @@ func girar(p_posicio_actual: Vector2, p_posicio_ratoli: Vector2):
 	var angle = ( p_posicio_ratoli - p_posicio_actual).angle();
 	angle = rad2deg(angle); # Per passar radians a graus
 	angle_rotacio = angle + 90;
+	# Cas específic pel cartabó per a fer-ho més intuitiu.
+	if self.nom_objecte.to_lower() == "cartabo":
+		angle_rotacio -= 90;
 	
 func voltejar(item):
 	self.posicio_voltejar += 1;

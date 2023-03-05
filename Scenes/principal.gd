@@ -11,8 +11,8 @@ func _ready():
 
 	var factor_escala = $carta.texture.get_size();
 	factor_escala = Vector2(factor_escala.x / $carta.tamany_mm.x, factor_escala.y / $carta.tamany_mm.y);
-	$transportador.set_factor_escala(factor_escala);
-	$cartabo.set_factor_escala(factor_escala);
+	$transportador.assignar_factor_escala(factor_escala);
+	$cartabo.assignar_factor_escala(factor_escala);
 
 func _input(ev):
 	if ev is InputEventMouseButton:
@@ -32,83 +32,84 @@ func _input(ev):
 			$cartabo.parar();
 			$llapis.parar()
 
-func _on_options_menu_option_pressed(id):
+func _on_menu_carta_option_pressed(id):
 	match id:
-		common.Popup_options.SHOW_COMPASS:
-			$compass.visible = true;
-			$compass/Collision_shape.disabled = false;
-			$options_menu.set_visibility(common.Item_types.COMPASS, true);
-		common.Popup_options.HIDE_COMPASS:
-			$compass.visible = false;
-			$compass/Collision_shape.disabled = true;
-			$options_menu.set_visibility(common.Item_types.COMPASS, false);
-		common.Popup_options.SHOW_PROTRACTOR:
-			$protractor.visible = true;
-			$protractor/Collision_shape.disabled = false;
-			$options_menu.set_visibility(common.Item_types.PROTRACTOR, true);
-		common.Popup_options.HIDE_PROTRACTOR:
-			$protractor.visible = false;
-			$protractor/Collision_shape.disabled = true;
-			$protractor.stop_it();
-			$options_menu.set_visibility(common.Item_types.PROTRACTOR, false);
-		common.Popup_options.MOVE_PROTRACTOR:
-			$protractor.start_moving();
-		common.Popup_options.TURN_PROTRACTOR:
-			$protractor.start_turning();
-		common.Popup_options.FLIP_PROTRACTOR:
-			$protractor.flip_it();
-		common.Popup_options.SHOW_PENCIL:
-			$pencil.visible = true;
-			$pencil/Collision_shape.disabled = false;
-			$options_menu.set_visibility(common.Item_types.PENCIL, true);
-		common.Popup_options.HIDE_PENCIL:
-			$pencil.visible = false;
-			$pencil/Collision_shape.disabled = true;
-			$pencil.stop_it();
-			$options_menu.set_visibility(common.Item_types.PENCIL, false);
-		common.Popup_options.MOVE_PENCIL:
-			$pencil.start_moving();
-		common.Popup_options.TURN_PENCIL:
-			$pencil.start_turning();
-		common.Popup_options.FLIP_PENCIL:
-			$pencil.flip_it();
-		common.Popup_options.DOT_PENCIL:
-			var pencil_position = $pencil.get_position();
-			$drawings.add_circle(pencil_position, 0);
-			$drawings.add_circle(pencil_position, 1);
-			$drawings.add_circle(pencil_position, 2);			
-		common.Popup_options.LINE_PENCIL:
-			var position = $pencil.get_line_normal_to_collision()[0];
-			var direction_vector = $pencil.get_line_normal_to_collision()[1];
-			var new_position = position + 10000 * direction_vector;
-			$drawings.add_line(position, new_position);
-			new_position = position - 10000 * direction_vector;
-			$drawings.add_line(position, new_position);
-		common.Popup_options.SHOW_TRIANGLE:
-			$triangle.visible = true;
-			$triangle/Collision_shape.disabled = false;
-			$options_menu.set_visibility(common.Item_types.TRIANGLE, true);
-		common.Popup_options.HIDE_TRIANGLE:
-			$triangle.visible = false;
-			$triangle/Collision_shape.disabled = true;
-			$triangle.stop_it();
-			$options_menu.set_visibility(common.Item_types.TRIANGLE, false);
-		common.Popup_options.MOVE_TRIANGLE:
-			$triangle.start_moving();
-		common.Popup_options.TURN_TRIANGLE:
-			$triangle.start_turning();
-		common.Popup_options.FLIP_TRIANGLE:
-			$triangle.flip_it();
-		common.Popup_options.MOVE_CHART:
-			$chart.start_moving();
-		common.Popup_options.QUIT_NO:
+		comu.Opcions_popup.MOSTRAR_COMPAS:
+			$compas.visible = true;
+			$compas/Collision_shape.disabled = false;
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, true);
+		comu.Opcions_popup.AMAGAR_COMPAS:
+			$compas.visible = false;
+			$compas/Collision_shape.disabled = true;
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, false);
+		comu.Opcions_popup.MOSTRAR_TRANSPORTADOR:
+			$transportador.visible = true;
+			$transportador/Collision_shape.disabled = false;
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.TRANSPORTADOR, true);
+		comu.Opcions_popup.AMAGAR_TRANSPORTADOR:
+			$transportador.visible = false;
+			$transportador/Collision_shape.disabled = true;
+			$transportador.parar();
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.TRANSPORTADOR, false);
+		comu.Opcions_popup.MOURE_TRANSPORTADOR:
+			$transportador.comencar_moure();
+		comu.Opcions_popup.GIRAR_TRANSPORTADOR:
+			$transportador.comencar_girar();
+		comu.Opcions_popup.VOLTEJAR_TRANSPORTADOR:
+			$transportador.voltejar();
+		comu.Opcions_popup.MOSTRAR_LLAPIS:
+			$llapis.visible = true;
+			$llapis/Collision_shape.disabled = false;
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.LLAPIS, true);
+		comu.Opcions_popup.AMAGAR_LLAPIS:
+			$llapis.visible = false;
+			$llapis/Collision_shape.disabled = true;
+			$llapis.parar();
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.LLAPIS, false);
+		comu.Opcions_popup.MOURE_LLAPIS:
+			$llapis.comencar_moure();
+		comu.Opcions_popup.GIRAR_LLAPIS:
+			$llapis.comencar_girar();
+		comu.Opcions_popup.VOLTEJAR_LLAPIS:
+			$llapis.voltejar();
+		comu.Opcions_popup.PUNT_LLAPIS:
+			var llapis_position = $llapis.get_position();
+			$dibuixos.afegir_cercle(llapis_position, 0);
+			$dibuixos.afegir_cercle(llapis_position, 1);
+			$dibuixos.afegir_cercle(llapis_position, 2);
+			$dibuixos.afegir_cercle(llapis_position, 6); # Per destacar la localització
+		comu.Opcions_popup.LINIA_LLAPIS:
+			var posicio = $llapis.obtenir_perpendicular_a_colisio()[0];
+			var vector_direccio = $llapis.obtenir_perpendicular_a_colisio()[1];
+			var nova_posicio = posicio + 10000 * vector_direccio;
+			$dibuixos.afegir_linia(posicio, nova_posicio);
+			nova_posicio = posicio - 10000 * vector_direccio;
+			$dibuixos.afegir_linia(posicio, nova_posicio);
+		comu.Opcions_popup.MOSTRAR_CARTABO:
+			$cartabo.visible = true;
+			$cartabo/Collision_shape.disabled = false;
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.CARTABO, true);
+		comu.Opcions_popup.AMAGAR_CARTABO:
+			$cartabo.visible = false;
+			$cartabo/Collision_shape.disabled = true;
+			$cartabo.parar();
+			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.CARTABO, false);
+		comu.Opcions_popup.MOURE_CARTABO:
+			$cartabo.comencar_moure();
+		comu.Opcions_popup.GIRAR_CARTABO:
+			$cartabo.comencar_girar();
+		comu.Opcions_popup.VOLTEJAR_CARTABO:
+			$cartabo.voltejar();
+		comu.Opcions_popup.MOURE_CARTA:
+			$carta.comencar_moure();
+		comu.Opcions_popup.SORTIR_NO:
 			#test_functions();
 			pass;
-		common.Popup_options.QUIT_YES:
+		comu.Opcions_popup.SORTIR_SI:
 			print("Nos vemos!!!");
 			get_tree().quit();
 		_:
-			print("Option not identified in _on_popup_menu_id_pressed: " + str(id));
+			print("Opción no identificada en _on_popup_menu_id_pressed: " + str(id));
 			
 func zoom_in():
 	print("Zoom in");
@@ -117,6 +118,5 @@ func zoom_out():
 	print("Zoom out");
 
 func test_functions():
-	$drawings.add_line(Vector2(0,0), Vector2(500, 500));
-	$drawings.add_circle(Vector2(500,500), 30.5);
-	$drawings.update();
+	$dibuixos.afegir_linia(Vector2(0,0), Vector2(500, 500));
+	$dibuixos.afegir_cercle(Vector2(500,500), 30.5);

@@ -32,4 +32,4 @@ position = Vector2( 0, -1 )
 
 [node name="menu_carta" parent="." instance=ExtResource( 2 )]
 
-[connection signal="option_pressed" from="menu_carta" to="." method="_on_options_menu_option_pressed"]
+[connection signal="option_pressed" from="menu_carta" to="." method="_on_menu_carta_option_pressed"]

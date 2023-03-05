@@ -8,7 +8,7 @@ var parametres2 := [];
 func _ready():
 	pass # Replace with function body.
 
-func afegir_linea(comencament: Vector2, final: Vector2):
+func afegir_linia(comencament: Vector2, final: Vector2):
 	tipus.append("linia");
 	parametres1.append(comencament);
 	parametres2.append(final);

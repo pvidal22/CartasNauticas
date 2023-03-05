@@ -1,5 +1,4 @@
 DOING:
-Poniéndolo en catalán.
 He de hacer un zoom "bonito" (quizás con la ruedecilla del mouse).
 He de hacer que los drawing se muevan si muevo el mapa o cambio su tamaño.
 

@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export var tamany_mm := Vector2(250, 150);
 
-var comu = load("res://Scripts/comu.gd").new("Triangle");
+var comu = load("res://Scripts/comu.gd").new("Cartabo");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,12 +12,12 @@ func _ready():
 func _physics_process(delta):
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
-	comu.display(self, delta);	
+	comu.mostrar(self, delta);	
 	
 func comencar_girar():
 	comu.comencar_girar();
 	
-func comencar_mouse():
+func comencar_moure():
 	get_viewport().warp_mouse(get_position());
 	comu.comencar_moure();
 	

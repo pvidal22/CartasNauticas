@@ -23,7 +23,7 @@ func _on_compass_menu_pressed():
 	var menu = $menu_compas.get_popup();
 	menu.clear();	
 	if not visibilitat[comu.Tipus_objecte.COMPAS]:
-		menu.add_item("Mostrar compas", comu.Opcions_popup.MOSRTAR_COMPAS);
+		menu.add_item("Mostrar compas", comu.Opcions_popup.MOSTRAR_COMPAS);
 	else:		
 		menu.add_item("Ocultar compas", comu.Opcions_popup.AMAGAR_COMPAS);
 	
@@ -73,7 +73,7 @@ func _on_pencil_menu_pressed():
 		menu.add_item("Mover lápiz", comu.Opcions_popup.MOURE_LLAPIS);
 		menu.add_item("Girar lápiz", comu.Opcions_popup.GIRAR_LLAPIS);
 		menu.add_item("Hacer un punto", comu.Opcions_popup.PUNT_LLAPIS);
-		menu.add_item("Hacer una línea", comu.Opcions_popup.LINEA_LLAPIS);
+		menu.add_item("Hacer una línea", comu.Opcions_popup.LINIA_LLAPIS);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 

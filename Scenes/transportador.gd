@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var tamany_mm := Vector2(100, 100);
+export var tamany_mm := Vector2(150, 150);
 
 var comu = load("res://Scripts/comu.gd").new("Transportador");
 
@@ -34,7 +34,7 @@ func girar():
 func voltejar():
 	comu.voltejar($Sprite)
 	
-func assignar_facotr_escala(p_factor_escala: Vector2):
+func assignar_factor_escala(p_factor_escala: Vector2):
 	var factor_escala: Vector2 = $Sprite.texture.get_size();
 	factor_escala = Vector2(p_factor_escala.x * tamany_mm.x / factor_escala.x \
 		, p_factor_escala.y * tamany_mm.y / factor_escala.y);

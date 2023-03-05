@@ -1,6 +1,6 @@
 extends TextureRect
 
-export var size_mm: Vector2 = Vector2(602, 442);
+export var tamany_mm: Vector2 = Vector2(602, 442);
 
 var tamany: Vector2 = Vector2.ZERO;
 var factor_escala: Vector2 = Vector2.ZERO;
@@ -12,8 +12,8 @@ func _ready():
 	tamany = get_viewport_rect().size;
 	print("Tamany: " + str(tamany));
 
-func comencar_moviment():
-	comu.comencar_moviment();
+func comencar_moure():
+	comu.comencar_moure();
 
 func parar():
 	comu.parar();
