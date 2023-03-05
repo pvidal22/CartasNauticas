@@ -2,20 +2,19 @@
 
 [ext_resource path="res://Scenes/menu_carta.gd" type="Script" id=1]
 
-
 [node name="options_menu" type="HBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
 
-[node name="chart_menu" type="MenuButton" parent="."]
+[node name="menu_carta" type="MenuButton" parent="."]
 margin_right = 96.0
 margin_bottom = 40.0
 focus_mode = 2
 text = "Carta Náutica"
 flat = false
 
-[node name="compass_menu" type="MenuButton" parent="."]
+[node name="menu_compas" type="MenuButton" parent="."]
 margin_left = 100.0
 margin_right = 163.0
 margin_bottom = 40.0
@@ -23,7 +22,7 @@ focus_mode = 2
 text = "Compas"
 flat = false
 
-[node name="protractor_menu" type="MenuButton" parent="."]
+[node name="menu_transportador" type="MenuButton" parent="."]
 margin_left = 167.0
 margin_right = 342.0
 margin_bottom = 40.0
@@ -31,7 +30,7 @@ focus_mode = 2
 text = "Transportador de Ángulos"
 flat = false
 
-[node name="triangle_menu" type="MenuButton" parent="."]
+[node name="menu_cartabo" type="MenuButton" parent="."]
 margin_left = 346.0
 margin_right = 414.0
 margin_bottom = 40.0
@@ -39,7 +38,7 @@ focus_mode = 2
 text = "Cartabón"
 flat = false
 
-[node name="pencil_menu" type="MenuButton" parent="."]
+[node name="menu_llapis" type="MenuButton" parent="."]
 margin_left = 418.0
 margin_right = 463.0
 margin_bottom = 40.0
@@ -47,7 +46,7 @@ focus_mode = 2
 text = "Lápiz"
 flat = false
 
-[node name="quit_menu" type="MenuButton" parent="."]
+[node name="menu_sortir" type="MenuButton" parent="."]
 margin_left = 467.0
 margin_right = 506.0
 margin_bottom = 40.0
@@ -55,9 +54,9 @@ focus_mode = 2
 text = "Salir"
 flat = false
 
-[connection signal="pressed" from="chart_menu" to="." method="_on_chart_menu_pressed"]
-[connection signal="pressed" from="compass_menu" to="." method="_on_compass_menu_pressed"]
-[connection signal="pressed" from="protractor_menu" to="." method="_on_protractor_menu_pressed"]
-[connection signal="pressed" from="triangle_menu" to="." method="_on_triangle_menu_pressed"]
-[connection signal="pressed" from="pencil_menu" to="." method="_on_pencil_menu_pressed"]
-[connection signal="pressed" from="quit_menu" to="." method="_on_quit_menu_pressed"]
+[connection signal="pressed" from="menu_carta" to="." method="_on_chart_menu_pressed"]
+[connection signal="pressed" from="menu_compas" to="." method="_on_compass_menu_pressed"]
+[connection signal="pressed" from="menu_transportador" to="." method="_on_protractor_menu_pressed"]
+[connection signal="pressed" from="menu_cartabo" to="." method="_on_triangle_menu_pressed"]
+[connection signal="pressed" from="menu_llapis" to="." method="_on_pencil_menu_pressed"]
+[connection signal="pressed" from="menu_sortir" to="." method="_on_quit_menu_pressed"]

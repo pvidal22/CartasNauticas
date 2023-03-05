@@ -20,9 +20,9 @@ func _input(ev):
 		if ev.pressed:
 			match ev.button_index:
 				BUTTON_WHEEL_UP:
-					zoom_gran();
+					zoom_in();
 				BUTTON_WHEEL_DOWN:
-					zoom_petit();
+					zoom_out();
 		if ev.button_index == 1 and ev.doubleclick:
 			print("Parar tot");
 			comu.parar();

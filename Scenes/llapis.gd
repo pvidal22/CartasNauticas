@@ -1,41 +1,41 @@
 extends KinematicBody2D
 
-export var size_mm := Vector2(10, 10);
+export var tamany_mm := Vector2(10, 10);
 
-var common = load("res://Scripts/common.gd").new("Pencil");
-var normal_to_latest_collision: Vector2 = Vector2.ZERO;
+var comu = load("res://Scripts/comu.gd").new("Llapis");
+var perpendicular_a_ultima_colisio: Vector2 = Vector2.ZERO;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
 	
 func _physics_process(delta):
-	if common.get_moving(): move_it();
-	if common.get_turning(): turn_it();
-	var result: Array = common.display(self, delta);
-	if not result.empty():
-		normal_to_latest_collision = result[1]
-		normal_to_latest_collision = Vector2(-normal_to_latest_collision.y, normal_to_latest_collision.x);
+	if comu.esta_movent(): moure();
+	if comu.esta_girant(): girar();
+	var resultat: Array = comu.mostrar(self, delta);
+	if not resultat.empty():
+		perpendicular_a_ultima_colisio = resultat[1]
+		perpendicular_a_ultima_colisio = Vector2(-perpendicular_a_ultima_colisio.y, perpendicular_a_ultima_colisio.x);
 	
-func start_turning():
-	common.start_turning();
+func comencar_girar():
+	comu.comencar_girar();
 	
-func start_moving():
+func comencar_moure():
 	get_viewport().warp_mouse(get_position() );
-	common.start_moving();
+	comu.comencar_moure();
 	
-func stop_it():
-	common.stop_it();
+func parar():
+	comu.parar();
 	
-func move_it():
-	common.move_it(get_position(), get_viewport().get_mouse_position()\
+func moure():
+	comu.moure(get_position(), get_viewport().get_mouse_position()\
 		, get_viewport_rect().size);
 
-func turn_it():
-	common.turn_it(get_position(), get_viewport().get_mouse_position());
+func girar():
+	comu.girar(get_position(), get_viewport().get_mouse_position());
 	
-func flip_it():	
-	common.flip_it($Sprite)
+func voltejar():	
+	comu.flip_it($Sprite)
 	
-func get_line_normal_to_collision() -> Array:
-	return [get_position(), self.normal_to_latest_collision];
+func obtenir_perpendicular_a_colisio() -> Array:
+	return [get_position(), self.perpendicular_a_ultima_colisio];

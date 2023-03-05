@@ -46,11 +46,11 @@ func mostrar(objecte, delta) -> Array:
 func obtenir_vector_moviment() -> Vector2:
 	return self.vector_moviment;
 	
-func comencar_a_girar():
+func comencar_girar():
 	girant = true;
 	movent = false;
 	
-func comencar_a_moure():
+func comencar_moure():
 	girant = false;
 	movent = true;
 	

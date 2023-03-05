@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-export var size_mm := Vector2(250, 150);
+export var tamany_mm := Vector2(250, 150);
 
-var common = load("res://Scripts/common.gd").new("Triangle");
+var comu = load("res://Scripts/comu.gd").new("Triangle");
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,32 +10,32 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if common.get_moving(): move_it();
-	if common.get_turning(): turn_it();
-	common.display(self, delta);	
+	if comu.esta_movent(): moure();
+	if comu.esta_girant(): girar();
+	comu.display(self, delta);	
 	
-func start_turning():
-	common.start_turning();
+func comencar_girar():
+	comu.comencar_girar();
 	
-func start_moving():
+func comencar_mouse():
 	get_viewport().warp_mouse(get_position());
-	common.start_moving();
+	comu.comencar_moure();
 	
-func stop_it():
-	common.stop_it();
+func parar():
+	comu.parar();
 	
-func move_it():
-	common.move_it(get_position(), get_viewport().get_mouse_position()\
+func moure():
+	comu.moure(get_position(), get_viewport().get_mouse_position()\
 		, get_viewport_rect().size);
 
-func turn_it():
-	common.turn_it(get_position(), get_viewport().get_mouse_position());
+func girar():
+	comu.girar(get_position(), get_viewport().get_mouse_position());
 	
-func flip_it():
-	common.flip_it($Sprite);
+func voltejar():
+	comu.voltejar($Sprite);
 	
-func set_scale_factor(chart_scale_factor: Vector2):
-	var scale_factor: Vector2 = $Sprite.texture.get_size();
-	scale_factor = Vector2(chart_scale_factor.x * size_mm.x / scale_factor.x \
-		, chart_scale_factor.y * size_mm.y / scale_factor.y);
-	scale = scale_factor;	
+func assignar_factor_escala(p_factor_escala: Vector2):
+	var factor_escala: Vector2 = $Sprite.texture.get_size();
+	factor_escala = Vector2(p_factor_escala.x * tamany_mm.x / factor_escala.x \
+		, p_factor_escala.y * tamany_mm.y / factor_escala.y);
+	scale = factor_escala;

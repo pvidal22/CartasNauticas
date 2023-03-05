@@ -1,86 +1,86 @@
 extends HBoxContainer
 
-var common = load("res://Scripts/common.gd").new("Main");
+var comu = load("res://Scripts/comu.gd").new("Main");
 
 signal option_pressed(id);
 
-var visibility := {};
+var visibilitat := {};
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_visibility(common.Item_types.PROTRACTOR, false);
-	set_visibility(common.Item_types.COMPASS, false);
-	set_visibility(common.Item_types.TRIANGLE, false);
-	set_visibility(common.Item_types.PENCIL, false);
+	assignar_visibilitat(comu.Tipus_objecte.TRANSPORTADOR, false);
+	assignar_visibilitat(comu.Tipus_objecte.COMPAS, false);
+	assignar_visibilitat(comu.Tipus_objecte.CARTABO, false);
+	assignar_visibilitat(comu.Tipus_objecte.LLAPIS, false);
 	
-func set_visibility(key: int, status: bool):
-	visibility[key] = status;
+func assignar_visibilitat(clau: int, estat: bool):
+	visibilitat[clau] = estat;
 
 func _on_popup_menu_id_pressed(id):
 	emit_signal("option_pressed", id);
 
 func _on_compass_menu_pressed():	
-	var menu = $compass_menu.get_popup();
+	var menu = $menu_compas.get_popup();
 	menu.clear();	
-	if not visibility[common.Item_types.COMPASS]:
-		menu.add_item("Mostrar compas", common.Popup_options.SHOW_COMPASS);
+	if not visibilitat[comu.Tipus_objecte.COMPAS]:
+		menu.add_item("Mostrar compas", comu.Opcions_popup.MOSRTAR_COMPAS);
 	else:		
-		menu.add_item("Ocultar compas", common.Popup_options.HIDE_COMPASS);
+		menu.add_item("Ocultar compas", comu.Opcions_popup.AMAGAR_COMPAS);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_protractor_menu_pressed():	
-	var menu = $protractor_menu.get_popup();
+	var menu = $menu_transportador.get_popup();
 	menu.clear();
-	if not visibility[common.Item_types.PROTRACTOR]:
-		menu.add_item("Mostrar transportador", common.Popup_options.SHOW_PROTRACTOR);
+	if not visibilitat[comu.Tipus_objecte.TRANSPORTADOR]:
+		menu.add_item("Mostrar transportador", comu.Opcions_popup.MOSTRAR_TRANSPORTADOR);
 	else:
-		menu.add_item("Ocultar transportador", common.Popup_options.HIDE_PROTRACTOR);
-		menu.add_item("Mover transportador", common.Popup_options.MOVE_PROTRACTOR);
-		menu.add_item("Girar transportador", common.Popup_options.TURN_PROTRACTOR);
-		#menu.add_item("Voltear transportador", common.Popup_options.FLIP_PROTRACTOR);
+		menu.add_item("Ocultar transportador", comu.Opcions_popup.AMAGAR_TRANSPORTADOR);
+		menu.add_item("Mover transportador", comu.Opcions_popup.MOURE_TRANSPORTADOR);
+		menu.add_item("Girar transportador", comu.Opcions_popup.GIRAR_TRANSPORTADOR);
+		#menu.add_item("Voltear transportador", comu.Opcions_popup.VOLTEJAR_TRANSPORTADOR);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_triangle_menu_pressed():
-	var menu = $triangle_menu.get_popup();
+	var menu = $menu_cartabo.get_popup();
 	menu.clear();
-	if not visibility[common.Item_types.TRIANGLE]:
-		menu.add_item("Mostrar cartabón", common.Popup_options.SHOW_TRIANGLE);
+	if not visibilitat[comu.Tipus_objecte.CARTABO]:
+		menu.add_item("Mostrar cartabón", comu.Opcions_popup.MOSTRAR_CARTABO);
 	else:
-		menu.add_item("Ocultar cartabón", common.Popup_options.HIDE_TRIANGLE);
-		menu.add_item("Mover cartabón", common.Popup_options.MOVE_TRIANGLE);
-		menu.add_item("Girar cartabón", common.Popup_options.TURN_TRIANGLE);
-		#menu.add_item("Voltear cartabón", common.Popup_options.FLIP_TRIANGLE);
+		menu.add_item("Ocultar cartabón", comu.Opcions_popup.AMAGAR_CARTABO);
+		menu.add_item("Mover cartabón", comu.Opcions_popup.MOURE_CARTABO);
+		menu.add_item("Girar cartabón", comu.Opcions_popup.GIRAR_CARTABO);
+		#menu.add_item("Voltear cartabón", comu.Opcions_popup.VOLTEJAR_CARTABO);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_chart_menu_pressed():
-	var menu = $chart_menu.get_popup();
+	var menu = $menu_carta.get_popup();
 	menu.clear();
-	menu.add_item("Mover carta náutica", common.Popup_options.MOVE_CHART);
+	menu.add_item("Mover carta náutica", comu.Opcions_popup.MOURE_CARTA);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_pencil_menu_pressed():
-	var menu = $pencil_menu.get_popup();
+	var menu = $menu_llapis.get_popup();
 	menu.clear();
 	
-	if not visibility[common.Item_types.PENCIL]:
-		menu.add_item("Mostrar lápiz", common.Popup_options.SHOW_PENCIL);
+	if not visibilitat[comu.Tipus_objecte.LLAPIS]:
+		menu.add_item("Mostrar lápiz", comu.Opcions_popup.MOSTRAR_LLAPIS);
 	else:
-		menu.add_item("Ocultar lápiz", common.Popup_options.HIDE_PENCIL);
-		menu.add_item("Mover lápiz", common.Popup_options.MOVE_PENCIL);
-		menu.add_item("Girar lápiz", common.Popup_options.TURN_PENCIL);
-		menu.add_item("Hacer un punto", common.Popup_options.DOT_PENCIL);
-		menu.add_item("Hacer una línea", common.Popup_options.LINE_PENCIL);
+		menu.add_item("Ocultar lápiz", comu.Opcions_popup.AMAGAR_LLAPIS);
+		menu.add_item("Mover lápiz", comu.Opcions_popup.MOURE_LLAPIS);
+		menu.add_item("Girar lápiz", comu.Opcions_popup.GIRAR_LLAPIS);
+		menu.add_item("Hacer un punto", comu.Opcions_popup.PUNT_LLAPIS);
+		menu.add_item("Hacer una línea", comu.Opcions_popup.LINEA_LLAPIS);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
 func _on_quit_menu_pressed():
-	var menu = $quit_menu.get_popup();
+	var menu = $menu_sortir.get_popup();
 	menu.clear();
-	menu.add_item("Estoy seguro", common.Popup_options.QUIT_YES);
-	menu.add_item("Cancelar", common.Popup_options.QUIT_NO);
+	menu.add_item("Estoy seguro", comu.Opcions_popup.SORTIR_SI);
+	menu.add_item("Cancelar", comu.Opcions_popup.SORTIR_NO);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
