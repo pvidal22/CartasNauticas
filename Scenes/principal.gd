@@ -101,7 +101,7 @@ func _on_menu_carta_option_pressed(id):
 		comu.Opcions_popup.VOLTEJAR_CARTABO:
 			$cartabo.voltejar();
 		comu.Opcions_popup.MOURE_CARTA:
-			$carta.comencar_moure();
+			$carta.comencar_moure(get_node("dibuixos"));
 		comu.Opcions_popup.SORTIR_NO:
 			#test_functions();
 			pass;
@@ -112,10 +112,10 @@ func _on_menu_carta_option_pressed(id):
 			print("Opción no identificada en _on_popup_menu_id_pressed: " + str(id));
 			
 func zoom_in():
-	print("Zoom in");
+	$carta.zoom_in(get_node("dibuixos"));
 	
 func zoom_out():
-	print("Zoom out");
+	$carta.zoom_out(get_node("dibuixos"));
 
 func test_functions():
 	$dibuixos.afegir_linia(Vector2(0,0), Vector2(500, 500));
