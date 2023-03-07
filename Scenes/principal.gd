@@ -31,6 +31,9 @@ func _input(ev):
 #			$compas.parar();
 			$cartabo.parar();
 			$llapis.parar()
+			
+	# if ev is InputEventScreenTouch: ==> Quizás esto para el iPAD
+		
 
 func _on_menu_carta_option_pressed(id):
 	match id:
