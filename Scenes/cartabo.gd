@@ -38,11 +38,12 @@ func actualitzar_posicio(nova_posicio: Vector2):
 	comu.actualitzar_posicio(nova_posicio);
 
 func re_escalar(nova_escala: float):
-	comu.re_escalar(nova_escala);
+	comu.re_escalar(nova_escala);	
 	
-func assignar_factor_escala(p_escala_vs_mm: Vector2):
+func assignar_factor_escala(p_px_vs_mm: Vector2):
 	var tamany_imatge: Vector2 = $Sprite.texture.get_size();
 	var factor_escala = Vector2(\
-		p_escala_vs_mm.x * tamany_mm.x / tamany_imatge.x \
-		, p_escala_vs_mm.y * tamany_mm.y / tamany_imatge.y);
+		p_px_vs_mm.x * tamany_mm.x / tamany_imatge.x \
+		, p_px_vs_mm.y * tamany_mm.y / tamany_imatge.y);
 	scale = factor_escala;
+	comu.assignar_escala_basica(factor_escala);

@@ -16,17 +16,21 @@ var angle_rotacio = null;
 var nom_objecte: String = "";
 var posicio_voltejar := 0;
 var velocitat_moviment = 500;
-var escala_carta: float = 1;
+var escala_carta = 1;
 var posicio_carta = null;
 var posicio_actual := Vector2.ZERO; # Sempre respecte escala = 1 i posicio 0,0
 var posicio_objectiu := Vector2.ZERO;
 var objecte = null;
+var escala_basica = 0;
 
 func _init(p_nom_objecte: String):
 	self.nom_objecte = p_nom_objecte; 
 
 func assignar_objecte(p_objecte):
 	self.objecte = p_objecte;
+	
+func assignar_escala_basica(p_escala_basica):
+	self.escala_basica = p_escala_basica;
 	
 func esta_movent() -> bool:
 	return movent;
@@ -44,8 +48,8 @@ func mostrar(delta) -> Array:
 	return [];
 	
 func actualitzar_dibuix_objecte(delta) -> Array:
-		var posicio_actual_ajustat = posicio_actual + posicio_carta;
-		var posicio_objectiu_ajustat = posicio_objectiu + posicio_carta;
+		var posicio_actual_ajustat = posicio_actual * self.escala_carta + posicio_carta;
+		var posicio_objectiu_ajustat = posicio_objectiu * self.escala_carta + posicio_carta;
 
 		if delta == 0:
 			objecte.set_position(posicio_objectiu_ajustat);
@@ -119,12 +123,9 @@ func actualitzar_posicio(nova_posicio: Vector2):
 	actualitzar_dibuix_objecte(0);
 
 func re_escalar(nova_escala: float):
-	var increment = 0.2;
-	if nova_escala < escala_carta:
-		increment *= -1;
-	objecte.scale.x += increment;
-	objecte.scale.y += increment;
 	self.escala_carta = nova_escala;
+	objecte.scale = self.escala_basica * nova_escala;
+	actualitzar_dibuix_objecte(0);
 
 func _input(ev: InputEvent):
 	if ev is InputEventMouseButton:
