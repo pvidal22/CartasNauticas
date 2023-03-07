@@ -12,7 +12,7 @@ func _ready():
 func _physics_process(delta):
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
-	comu.mostrar(self, delta);
+#	comu.mostrar(self, delta);
 	
 func comencar_girar():
 	comu.comencar_girar();

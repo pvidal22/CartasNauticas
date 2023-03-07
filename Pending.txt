@@ -1,10 +1,7 @@
 DOING:
-El zoom de los círculos ya me funciona... ahora he de hacer el de las líneas.
-He de hacer un zoom "bonito" (quizás con la ruedecilla del mouse).
-He de hacer que los drawing se muevan si muevo el mapa o cambio su tamaño.
+Escalar la resta d'utensilis...
 
 TO DO:
-He de hacer que los drawing se muevan si muevo el mapa o cambio su tamaño.
 
 NOT DONE:
 Tratando de detectar la colisión en caso de rotación.... NO lo he conseguido :-(

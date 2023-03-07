@@ -12,10 +12,10 @@ func _ready():
 func _physics_process(delta):
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
-	var resultat: Array = comu.mostrar(self, delta);
-	if not resultat.empty():
-		perpendicular_a_ultima_colisio = resultat[1]
-		perpendicular_a_ultima_colisio = Vector2(-perpendicular_a_ultima_colisio.y, perpendicular_a_ultima_colisio.x);
+#	var resultat: Array = comu.mostrar(self, delta);
+#	if not resultat.empty():
+#		perpendicular_a_ultima_colisio = resultat[1]
+#		perpendicular_a_ultima_colisio = Vector2(-perpendicular_a_ultima_colisio.y, perpendicular_a_ultima_colisio.x);
 	
 func comencar_girar():
 	comu.comencar_girar();
