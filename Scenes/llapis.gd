@@ -8,14 +8,15 @@ var perpendicular_a_ultima_colisio: Vector2 = Vector2.ZERO;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
+	comu.assignar_objecte(self);
 	
 func _physics_process(delta):
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
-#	var resultat: Array = comu.mostrar(self, delta);
-#	if not resultat.empty():
-#		perpendicular_a_ultima_colisio = resultat[1]
-#		perpendicular_a_ultima_colisio = Vector2(-perpendicular_a_ultima_colisio.y, perpendicular_a_ultima_colisio.x);
+	var resultat: Array = comu.mostrar(delta);
+	if not resultat.empty():
+		perpendicular_a_ultima_colisio = resultat[1]
+		perpendicular_a_ultima_colisio = Vector2(-perpendicular_a_ultima_colisio.y, perpendicular_a_ultima_colisio.x);
 	
 func comencar_girar():
 	comu.comencar_girar();
@@ -28,14 +29,26 @@ func parar():
 	comu.parar();
 	
 func moure():
-	comu.moure(get_position(), get_viewport().get_mouse_position()\
-		, get_viewport_rect().size);
+	comu.moure(get_position(), get_viewport().get_mouse_position());
 
 func girar():
 	comu.girar(get_position(), get_viewport().get_mouse_position());
 	
 func voltejar():	
-	comu.flip_it($Sprite)
+	comu.voltejar($Sprite)
+
+func actualitzar_posicio(nova_posicio: Vector2):
+	comu.actualitzar_posicio(nova_posicio);
+
+func re_escalar(nova_escala: float):
+	comu.re_escalar(nova_escala);		
 	
+func assignar_factor_escala(_p_px_vs_mm: Vector2):
+	#var tamany_imatge: Vector2 = $Sprite.texture.get_size();
+	var factor_escala = Vector2(1.1, 1.1);
+	scale = factor_escala;
+	comu.assignar_escala_basica(factor_escala);
+
 func obtenir_perpendicular_a_colisio() -> Array:
+	print("get_pend" + str(self.perpendicular_a_ultima_colisio));
 	return [get_position(), self.perpendicular_a_ultima_colisio];

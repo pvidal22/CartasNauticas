@@ -12,6 +12,10 @@ var objectes = null;
 func _ready():
 	tamany = get_viewport_rect().size;
 	print("Tamany: " + str(tamany));
+	get_tree().get_root().connect("size_changed", self, "canvi_tamany_finestra");
+
+func canvi_tamany_finestra():
+	print("Resizing: " + str(get_viewport_rect().size) + ". Position: " + str(get_position()));
 	
 func assignar_objectes(p_objectes: Array):
 	self.objectes = p_objectes;
@@ -46,14 +50,14 @@ func moure():
 		for objecte in objectes:
 			objecte.actualitzar_posicio(posicio);
 	
-func zoom_in(p_dibuixos):
+func zoom_in():
 	self.rect_scale.x += 0.1;
 	self.rect_scale.y += 0.1;	
 	if objectes != null:
 		for objecte in objectes:
 			objecte.re_escalar(rect_scale.x);
 	
-func zoom_out(p_dibuixos):
+func zoom_out():
 	self.rect_scale.x -= 0.1;
 	self.rect_scale.y -= 0.1;
 	if objectes != null:

@@ -7,12 +7,13 @@ var comu = load("res://Scripts/comu.gd").new("Transportador");
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
+	comu.assignar_objecte(self);
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
-#	comu.mostrar(self, delta);
+	comu.mostrar(delta);
 	
 func comencar_girar():
 	comu.comencar_girar();
@@ -25,17 +26,24 @@ func parar():
 	comu.parar();
 	
 func moure():
-	comu.moure(get_position(), get_viewport().get_mouse_position()\
-		, get_viewport_rect().size);
+	comu.moure(get_position(), get_viewport().get_mouse_position());
 
 func girar():
 	comu.girar(get_position(), get_viewport().get_mouse_position());
 	
 func voltejar():
 	comu.voltejar($Sprite)
+
+func actualitzar_posicio(nova_posicio: Vector2):
+	comu.actualitzar_posicio(nova_posicio);
+
+func re_escalar(nova_escala: float):
+	comu.re_escalar(nova_escala);		
 	
-func assignar_factor_escala(p_factor_escala: Vector2):
-	var factor_escala: Vector2 = $Sprite.texture.get_size();
-	factor_escala = Vector2(p_factor_escala.x * tamany_mm.x / factor_escala.x \
-		, p_factor_escala.y * tamany_mm.y / factor_escala.y);
-	scale = factor_escala;	
+func assignar_factor_escala(p_px_vs_mm: Vector2):
+	var tamany_imatge: Vector2 = $Sprite.texture.get_size();
+	var factor_escala = Vector2(\
+		p_px_vs_mm.x * tamany_mm.x / tamany_imatge.x \
+		, p_px_vs_mm.y * tamany_mm.y / tamany_imatge.y);
+	scale = factor_escala;
+	comu.assignar_escala_basica(factor_escala);

@@ -39,7 +39,10 @@ func verificar_posicio_i_escala(carta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass;
-
+	
+func assignar_factor_escala(_p_px_vs_mm: Vector2):
+	pass;
+	
 func _draw():
 	for lii in range(0, len(tipus)):
 		match tipus[lii].to_lower():

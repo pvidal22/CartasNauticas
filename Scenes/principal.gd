@@ -2,6 +2,12 @@ extends Node
 
 var comu = load("res://Scripts/comu.gd").new("Principal");
 var objectes = null;
+var objectes_mostrats := {
+	comu.Tipus_objecte.CARTABO: false,
+	comu.Tipus_objecte.TRANSPORTADOR: false,
+	comu.Tipus_objecte.COMPAS: false,
+	comu.Tipus_objecte.LLAPIS: false,
+};
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,9 +18,10 @@ func _ready():
 
 	var tamany_imatge_px = $carta.texture.get_size();
 	var escala_vs_mm = Vector2(tamany_imatge_px.x / $carta.tamany_mm.x, tamany_imatge_px.y / $carta.tamany_mm.y);
-	$transportador.assignar_factor_escala(escala_vs_mm);
-	$cartabo.assignar_factor_escala(escala_vs_mm);
-	self.objectes = [$cartabo]; #, $transportador, $compas, $llapis, $dibuixos];
+	self.objectes = [$cartabo, $transportador, $llapis, $dibuixos]; #, $compas];
+	for objecte in objectes:
+		objecte.assignar_factor_escala(escala_vs_mm);
+	
 	$carta.assignar_objectes(objectes);
 
 func _input(ev):
@@ -46,6 +53,7 @@ func _on_menu_carta_option_pressed(id):
 			$compas.visible = true;
 			$compas/Collision_shape.disabled = false;
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, true);
+			es_primer_cop_mostrat($compas, comu.Tipus_objecte.COMPAS);
 
 		comu.Opcions_popup.AMAGAR_COMPAS:
 			$compas.visible = false;
@@ -53,9 +61,12 @@ func _on_menu_carta_option_pressed(id):
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, false);
 
 		comu.Opcions_popup.MOSTRAR_TRANSPORTADOR:
+			$transportador.actualitzar_posicio($carta.get_position());
+			$transportador.re_escalar($carta.rect_scale.x);
 			$transportador.visible = true;
 			$transportador/Collision_shape.disabled = false;
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.TRANSPORTADOR, true);
+			es_primer_cop_mostrat($transportador, comu.Tipus_objecte.TRANSPORTADOR);
 
 		comu.Opcions_popup.AMAGAR_TRANSPORTADOR:
 			$transportador.visible = false;
@@ -73,9 +84,12 @@ func _on_menu_carta_option_pressed(id):
 			$transportador.voltejar();
 
 		comu.Opcions_popup.MOSTRAR_LLAPIS:
+			$llapis.actualitzar_posicio($carta.get_position());
+			$llapis.re_escalar($carta.rect_scale.x);
 			$llapis.visible = true;
 			$llapis/Collision_shape.disabled = false;
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.LLAPIS, true);
+			es_primer_cop_mostrat($llapis, comu.Tipus_objecte.LLAPIS);
 
 		comu.Opcions_popup.AMAGAR_LLAPIS:
 			$llapis.visible = false;
@@ -113,6 +127,7 @@ func _on_menu_carta_option_pressed(id):
 			$cartabo.visible = true;
 			$cartabo/Collision_shape.disabled = false;
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.CARTABO, true);
+			es_primer_cop_mostrat($cartabo, comu.Tipus_objecte.CARTABO);
 
 		comu.Opcions_popup.AMAGAR_CARTABO:
 			$cartabo.visible = false;
@@ -144,10 +159,15 @@ func _on_menu_carta_option_pressed(id):
 			print("Opción no identificada en _on_popup_menu_id_pressed: " + str(id));
 			
 func zoom_in():
-	$carta.zoom_in(get_node("dibuixos"));
+	$carta.zoom_in();
 	
 func zoom_out():
-	$carta.zoom_out(get_node("dibuixos"));
+	$carta.zoom_out();
+	
+func es_primer_cop_mostrat(objecte, identificador_objecte):
+	if not objectes_mostrats[identificador_objecte]:
+		objecte.set_position(Vector2(0, 0));
+		objectes_mostrats[identificador_objecte] = true;
 
 func probar_funcions():
 	$dibuixos.afegir_linia(Vector2(0,0), Vector2(500, 500));

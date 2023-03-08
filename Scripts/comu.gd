@@ -16,7 +16,7 @@ var angle_rotacio = null;
 var nom_objecte: String = "";
 var posicio_voltejar := 0;
 var velocitat_moviment = 500;
-var escala_carta = 1;
+var escala_carta := 1.0;
 var posicio_carta = null;
 var posicio_actual := Vector2.ZERO; # Sempre respecte escala = 1 i posicio 0,0
 var posicio_objectiu := Vector2.ZERO;
@@ -48,25 +48,25 @@ func mostrar(delta) -> Array:
 	return [];
 	
 func actualitzar_dibuix_objecte(delta) -> Array:
-		var posicio_actual_ajustat = posicio_actual * self.escala_carta + posicio_carta;
-		var posicio_objectiu_ajustat = posicio_objectiu * self.escala_carta + posicio_carta;
+	if posicio_carta == null: return [];
+	var posicio_actual_ajustat = posicio_actual * self.escala_carta + posicio_carta;
+	var posicio_objectiu_ajustat = posicio_objectiu * self.escala_carta + posicio_carta;
+	if delta == 0:
+		objecte.set_position(posicio_objectiu_ajustat);
+	
+	#posicio_objectiu_ajustat.x = clamp(posicio_objectiu_ajustat.x, 0, tamany_canvas.x);
+	#posicio_objectiu_ajustat.y = clamp(posicio_objectiu_ajustat.y, 0, tamany_canvas.y);
 
-		if delta == 0:
-			objecte.set_position(posicio_objectiu_ajustat);
-		
-		#posicio_objectiu_ajustat.x = clamp(posicio_objectiu_ajustat.x, 0, tamany_canvas.x);
-		#posicio_objectiu_ajustat.y = clamp(posicio_objectiu_ajustat.y, 0, tamany_canvas.y);
-
-		var distancia = (posicio_objectiu_ajustat - posicio_actual_ajustat).length();	
-		var local_velocitat_moviment = velocitat_moviment;
-		if distancia < 10:
-			local_velocitat_moviment = 10;
-		var velocitat = obtenir_vector_moviment(posicio_objectiu_ajustat, posicio_actual_ajustat) * local_velocitat_moviment;
-		var colissio = objecte.move_and_collide(velocitat * delta);
-		if colissio: # Returnem la posició de la colisió i un vector perpendicular a la colisió
-			return [Vector2(colissio.position), colissio.normal];
-		
-		return [];
+	var distancia = (posicio_objectiu_ajustat - posicio_actual_ajustat).length();	
+	var local_velocitat_moviment = velocitat_moviment;
+	if distancia < 10:
+		local_velocitat_moviment = 10;
+	var velocitat = obtenir_vector_moviment(posicio_objectiu_ajustat, posicio_actual_ajustat) * local_velocitat_moviment;
+	var colissio = objecte.move_and_collide(velocitat * delta);
+	if colissio: # Returnem la posició de la colisió i un vector perpendicular a la colisió
+		return [Vector2(colissio.position), colissio.normal];
+	
+	return [];
 
 func obtenir_vector_moviment(objectiu: Vector2, actual: Vector2) -> Vector2:
 	if objectiu == actual:
