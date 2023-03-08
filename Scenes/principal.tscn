@@ -32,4 +32,12 @@ position = Vector2( 0, -1 )
 
 [node name="menu_carta" parent="." instance=ExtResource( 2 )]
 
+[node name="Label" type="Label" parent="."]
+margin_left = 1.0
+margin_top = 199.0
+margin_right = 443.0
+margin_bottom = 245.0
+custom_colors/font_color = Color( 0.909804, 0.054902, 0.172549, 1 )
+text = "epp"
+
 [connection signal="option_pressed" from="menu_carta" to="." method="_on_menu_carta_option_pressed"]

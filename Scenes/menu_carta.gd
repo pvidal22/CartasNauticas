@@ -82,5 +82,6 @@ func _on_quit_menu_pressed():
 	menu.clear();
 	menu.add_item("Estoy seguro", comu.Opcions_popup.SORTIR_SI);
 	menu.add_item("Cancelar", comu.Opcions_popup.SORTIR_NO);
+	menu.add_item("Versión: 20230308_02", comu.Opcions_popup.SORTIR_NO);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");

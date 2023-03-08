@@ -11,7 +11,7 @@ var objectes_mostrats := {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# Per centrar la imatge
+	# Per centrar la finestra
 	var pantalla_tamany = OS.get_screen_size(-1);
 	var finestra_tamany = OS.get_window_size();
 	OS.set_window_position(pantalla_tamany * 0.5 - finestra_tamany * 0.5);
@@ -24,7 +24,7 @@ func _ready():
 	
 	$carta.assignar_objectes(objectes);
 
-func _input(ev):
+func _input(ev):	
 	if ev is InputEventMouseButton:
 		ev = ev as InputEventMouseButton
 		if ev.pressed:
@@ -45,6 +45,7 @@ func _input(ev):
 	if ev is InputEventScreenTouch:
 		ev = ev as InputEventScreenTouch;
 		print("Touch screen: " + str(ev.index) + "," + str(ev.pressed) + "," + str(ev.as_text()));
+		$Label.text = "Touch screen: " + str(ev.index) + "," + str(ev.pressed) + "," + str(ev.as_text());
 		#if ev.index == 2 and ev.pressed		
 
 func _on_menu_carta_option_pressed(id):

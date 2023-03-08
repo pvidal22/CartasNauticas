@@ -15,7 +15,12 @@ func _ready():
 	get_tree().get_root().connect("size_changed", self, "canvi_tamany_finestra");
 
 func canvi_tamany_finestra():
-	print("Resizing: " + str(get_viewport_rect().size) + ". Position: " + str(get_position()));
+	#print("Resizing: " + str(get_viewport_rect().size) + ". Position: " + str(get_position()));
+	var posicio = get_position();
+	if objectes != null:
+		for objecte in objectes:
+			objecte.actualitzar_posicio(posicio);
+	
 	
 func assignar_objectes(p_objectes: Array):
 	self.objectes = p_objectes;
