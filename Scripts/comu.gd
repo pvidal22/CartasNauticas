@@ -63,7 +63,10 @@ func actualitzar_dibuix_objecte(delta) -> Array:
 		local_velocitat_moviment = 10;
 	var velocitat = obtenir_vector_moviment(posicio_objectiu_ajustat, posicio_actual_ajustat) * local_velocitat_moviment;
 	var colissio = objecte.move_and_collide(velocitat * delta);
-	if colissio: # Returnem la posició de la colisió i un vector perpendicular a la colisió
+	if colissio: 
+		# Returnem la posició de la colisió i un vector perpendicular a la colisió. 
+		# I assignem la posició objectiu a la actual per evitar moviments fantasmes
+		posicio_objectiu = posicio_actual;
 		return [Vector2(colissio.position), colissio.normal];
 	
 	return [];
