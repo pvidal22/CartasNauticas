@@ -1,6 +1,6 @@
 extends Node
 
-var versio := "20230312_30";
+var versio := "20230312_31";
 var comu = load("res://Scripts/comu.gd").new("Principal");
 var objectes = null;
 var objectes_mostrats := {
@@ -48,9 +48,9 @@ func _input(ev):
 		if ev_ratoli.pressed:
 			match ev_ratoli.button_index:
 				BUTTON_WHEEL_UP:
-					zoom_in();
+					zoom_in(0.01);
 				BUTTON_WHEEL_DOWN:
-					zoom_out();
+					zoom_out(0.01);
 		if ev_ratoli.button_index == 1 and ev_ratoli.doubleclick:
 			parar_tot();
 			
@@ -71,47 +71,31 @@ func _input(ev):
 
 	if ev is InputEventScreenDrag:
 		var ev_arrastrar_pantalla := ev as InputEventScreenDrag;
-#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative());
 		if self.ultima_posicio_arrastre == null:
 			ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
 			return;
-
-#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 01";
 		
 		if ultima_posicio_arrastre + ev_arrastrar_pantalla.get_relative() == ev_arrastrar_pantalla.get_position():
 			# És el mateix dit.
-#			$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#				str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 02";
 			ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
 			return;
 		
-#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 03";
-
 		# No és el mateix dit...
 		var diferencia = (ev_arrastrar_pantalla.get_position() - ultima_posicio_arrastre).length();
 		ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
-#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 04";
 		if self.ultima_diferencia == null:
 			ultima_diferencia = diferencia;
-#			$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#				str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 05";
 			return;
 		
-#		$Label.text = "06";
 		if diferencia > ultima_diferencia:
-			zoom_in();
+			zoom_in(0.01);
 		else:
-			zoom_out();
+			zoom_out(0.01);
 		ultima_diferencia = diferencia;
-#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
-#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ";" + str(ultima_diferencia);
-		
-		
-		
+	else:
+		# No estem arrastram, per tant... ho posem tot a null altre cop...
+		ultima_posicio_arrastre = null;
+		ultima_diferencia = null;
 
 func parar_tot():
 	print("Parar tot");
@@ -253,11 +237,11 @@ func _on_menu_carta_option_pressed(id):
 		_:
 			print("Opción no identificada en _on_popup_menu_id_pressed: " + str(id));
 			
-func zoom_in():
-	$carta.zoom_in();
+func zoom_in(valor_zoom = 0.1):
+	$carta.zoom_in(valor_zoom);
 	
-func zoom_out():
-	$carta.zoom_out();
+func zoom_out(valor_zoom = 0.1):
+	$carta.zoom_out(valor_zoom);
 	
 func es_primer_cop_mostrat(objecte, identificador_objecte):
 	if not objectes_mostrats[identificador_objecte]:
