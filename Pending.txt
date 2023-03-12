@@ -1,5 +1,5 @@
 DOING:
-No me funciiona otra vez el zoom del touch
+Probar un poco el zoom en touch y hacer que el zoom sea donde esté el mouse o en el centro de los puntos de piching...
 
 TO DO:
 
