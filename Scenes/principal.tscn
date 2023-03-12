@@ -38,6 +38,6 @@ margin_top = 199.0
 margin_right = 443.0
 margin_bottom = 245.0
 custom_colors/font_color = Color( 0.909804, 0.054902, 0.172549, 1 )
-text = "epp"
+text = "Això és $Label"
 
 [connection signal="option_pressed" from="menu_carta" to="." method="_on_menu_carta_option_pressed"]

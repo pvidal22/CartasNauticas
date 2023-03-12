@@ -55,16 +55,16 @@ func moure():
 		for objecte in objectes:
 			objecte.actualitzar_posicio(posicio);
 	
-func zoom_in(valor_zoom):
-	self.rect_scale.x += valor_zoom;
-	self.rect_scale.y += valor_zoom;
+func zoom_in():
+	self.rect_scale.x += 0.01;
+	self.rect_scale.y += 0.01;
 	if objectes != null:
 		for objecte in objectes:
 			objecte.re_escalar(rect_scale.x);
 	
-func zoom_out(valor_zoom):
-	self.rect_scale.x -= valor_zoom;
-	self.rect_scale.y -= valor_zoom;
+func zoom_out():
+	self.rect_scale.x -= 0.01;
+	self.rect_scale.y -= 0.01;
 	if objectes != null:
 		for objecte in objectes:
 			objecte.re_escalar(rect_scale.x);
