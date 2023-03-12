@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var comu = load("res://Scripts/comu.gd").new("Compas");
 var tamany_per_defecte = Vector2.ZERO; # Amb escala 1.1
+var principal = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,9 +11,13 @@ func _ready():
 	tamany_per_defecte = $Sprite.texture.get_size();
 	tamany_per_defecte.x = tamany_per_defecte.x - 10; # Per compensar la diferència entre la punta del compàs i el marge esquerre de la imatge
 	print("Tamany_compass: " + str(tamany_per_defecte));
+	
+func assignar_principal(p_principal):
+	principal = p_principal;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if principal != null and principal.estem_descomptant: return;
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
 	if comu.esta_ajustant(): ajustar();

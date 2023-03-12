@@ -16,8 +16,7 @@ func assignar_principal(p_principal):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if self.principal != null and self.principal.estem_descomptant:
-		return;
+	if self.principal != null and self.principal.estem_descomptant: return;
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
 	comu.mostrar(delta);

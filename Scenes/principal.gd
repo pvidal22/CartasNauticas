@@ -1,6 +1,6 @@
 extends Node
 
-var versio := "20230312_18";
+var versio := "20230312_30";
 var comu = load("res://Scripts/comu.gd").new("Principal");
 var objectes = null;
 var objectes_mostrats := {
@@ -14,6 +14,8 @@ var objectes_mostrats := {
 var estem_descomptant := false;
 var temps_per_descomptar: = 0.0;
 var index_pulsacio := 0;
+var ultima_posicio_arrastre = null;
+var ultima_diferencia = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,12 +29,12 @@ func _ready():
 	self.objectes = [$cartabo, $transportador, $llapis, $dibuixos, $compas];
 	for objecte in objectes:
 		objecte.assignar_factor_escala(escala_vs_mm);
-		
-	$transportador.assignar_principal(self);
+		objecte.assignar_principal(self);
 	
 	$carta.assignar_objectes(objectes);
 	
 	$menu_carta.definir_versio(self.versio);
+	$Label.text = "";
 	
 func _process(delta):
 	if estem_descomptant:
@@ -54,7 +56,6 @@ func _input(ev):
 			
 	if ev is InputEventScreenTouch:		
 		var ev_tocar_pantalla := ev as InputEventScreenTouch;
-		$Label.text = "Position: " + str(ev_tocar_pantalla.get_index()) + ";" + \
 		str(ev_tocar_pantalla.get_position()) + ";" + str(ev_tocar_pantalla.is_pressed());
 
 		var esta_pressionat := ev_tocar_pantalla.pressed as bool;
@@ -62,16 +63,55 @@ func _input(ev):
 		if esta_pressionat and estem_descomptant and index_pulsacio != ev_tocar_pantalla.index:
 #			# És una doble pulsació.
 			parar_tot();
-		if esta_pressionat and not estem_descomptant:
-			# Comencem a descoptar.
-			temps_per_descomptar = 1; # s
+		elif esta_pressionat and not estem_descomptant:
+			# Comencem a descomptar.
+			temps_per_descomptar = 0.250; # s
 			index_pulsacio = ev_tocar_pantalla.index;
 			estem_descomptant = true;
 
-#	if ev is InputEventScreenDrag:
-#		var ev_arrastrar_pantalla := ev as InputEventScreenDrag;
+	if ev is InputEventScreenDrag:
+		var ev_arrastrar_pantalla := ev as InputEventScreenDrag;
 #		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
 #			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative());
+		if self.ultima_posicio_arrastre == null:
+			ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
+			return;
+
+#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 01";
+		
+		if ultima_posicio_arrastre + ev_arrastrar_pantalla.get_relative() == ev_arrastrar_pantalla.get_position():
+			# És el mateix dit.
+#			$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#				str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 02";
+			ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
+			return;
+		
+#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 03";
+
+		# No és el mateix dit...
+		var diferencia = (ev_arrastrar_pantalla.get_position() - ultima_posicio_arrastre).length();
+		ultima_posicio_arrastre = ev_arrastrar_pantalla.get_position();
+#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 04";
+		if self.ultima_diferencia == null:
+			ultima_diferencia = diferencia;
+#			$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#				str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ": 05";
+			return;
+		
+#		$Label.text = "06";
+		if diferencia > ultima_diferencia:
+			zoom_in();
+		else:
+			zoom_out();
+		ultima_diferencia = diferencia;
+#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative()) + ";" + str(ultima_diferencia);
+		
+		
+		
 
 func parar_tot():
 	print("Parar tot");

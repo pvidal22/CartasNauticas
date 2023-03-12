@@ -5,10 +5,14 @@ var parametres1 := []; # Sempre respecte 0,0 i escala 1
 var parametres2 := []; # Sempre respecte 0,0 i escala 1
 var escala_carta: float = 1;
 var posicio_carta = null;
+var principal = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+	
+func assignar_principal(p_principal):
+	principal = p_principal;
 
 func afegir_linia(comencament: Vector2, final: Vector2, carta):
 	verificar_posicio_i_escala(carta);

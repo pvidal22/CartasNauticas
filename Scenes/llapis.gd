@@ -4,13 +4,18 @@ export var tamany_mm := Vector2(10, 10);
 
 var comu = load("res://Scripts/comu.gd").new("Llapis");
 var perpendicular_a_ultima_colisio: Vector2 = Vector2.ZERO;
+var principal = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
 	comu.assignar_objecte(self);
 	
+func assignar_principal(p_principal):
+	principal = p_principal;
+
 func _physics_process(delta):
+	if principal != null and principal.estem_descomptant: return;
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
 	var resultat: Array = comu.mostrar(delta);

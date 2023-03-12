@@ -3,14 +3,19 @@ extends KinematicBody2D
 export var tamany_mm := Vector2(250, 150);
 
 var comu = load("res://Scripts/comu.gd").new("Cartabo");
+var principal = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
 	comu.assignar_objecte(self);
+
+func assignar_principal(p_principal):
+	principal = p_principal;
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if principal != null and principal.estem_descomptant: return;
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
 	comu.mostrar(delta);
