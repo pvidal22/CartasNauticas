@@ -1,5 +1,6 @@
 extends Node
 
+var versio := "20230312_17";
 var comu = load("res://Scripts/comu.gd").new("Principal");
 var objectes = null;
 var objectes_mostrats := {
@@ -8,6 +9,11 @@ var objectes_mostrats := {
 	comu.Tipus_objecte.COMPAS: false,
 	comu.Tipus_objecte.LLAPIS: false,
 };
+
+# Variables per controlar la doble pulsació i el zoom_in/out en pantalles tàctils
+var estem_descomptant := false;
+var temps_per_descomptar: = 0.0;
+var index_pulsacio := 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,39 +24,67 @@ func _ready():
 
 	var tamany_imatge_px = $carta.texture.get_size();
 	var escala_vs_mm = Vector2(tamany_imatge_px.x / $carta.tamany_mm.x, tamany_imatge_px.y / $carta.tamany_mm.y);
-	self.objectes = [$cartabo, $transportador, $llapis, $dibuixos]; #, $compas];
+	self.objectes = [$cartabo, $transportador, $llapis, $dibuixos, $compas];
 	for objecte in objectes:
 		objecte.assignar_factor_escala(escala_vs_mm);
 	
 	$carta.assignar_objectes(objectes);
+	
+	$menu_carta.definir_versio(self.versio);
+	
+func _process(delta):
+	if estem_descomptant:		
+		temps_per_descomptar -= delta;
+		if temps_per_descomptar <= 0:
+			estem_descomptant = false;
 
-func _input(ev):	
+func _input(ev):
 	if ev is InputEventMouseButton:
-		ev = ev as InputEventMouseButton
-		if ev.pressed:
-			match ev.button_index:
+		var ev_ratoli := ev as InputEventMouseButton
+		if ev_ratoli.pressed:
+			match ev_ratoli.button_index:
 				BUTTON_WHEEL_UP:
 					zoom_in();
 				BUTTON_WHEEL_DOWN:
 					zoom_out();
-		if ev.button_index == 1 and ev.doubleclick:
-			print("Parar tot");
-			comu.parar();
-			$carta.parar();
-			$transportador.parar();
-#			$compas.parar();
-			$cartabo.parar();
-			$llapis.parar()
+		if ev_ratoli.button_index == 1 and ev_ratoli.doubleclick:
+			parar_tot();
 			
-	if ev is InputEventScreenTouch:
-		ev = ev as InputEventScreenTouch;
-		print("Touch screen: " + str(ev.index) + "," + str(ev.pressed) + "," + str(ev.as_text()));
-		$Label.text = "Touch screen: " + str(ev.index) + "," + str(ev.pressed) + "," + str(ev.as_text());
-		#if ev.index == 2 and ev.pressed		
+	if ev is InputEventScreenTouch:		
+		var ev_tocar_pantalla := ev as InputEventScreenTouch;
+		$Label.text = "Position: " + str(ev_tocar_pantalla.get_index()) + ";" + \
+		str(ev_tocar_pantalla.get_position()) + ";" + str(ev_tocar_pantalla.is_pressed());
+
+		var esta_pressionat := ev_tocar_pantalla.pressed as bool;
+		var _posicio := ev_tocar_pantalla.position as Vector2;
+		if esta_pressionat and estem_descomptant and index_pulsacio != ev_tocar_pantalla.index:
+#			# És una doble pulsació.
+			parar_tot();
+		if esta_pressionat and not estem_descomptant:
+			# Comencem a descoptar.
+			temps_per_descomptar = 1; # s
+			index_pulsacio = ev_tocar_pantalla.index;
+			estem_descomptant = true;
+
+#	if ev is InputEventScreenDrag:
+#		var ev_arrastrar_pantalla := ev as InputEventScreenDrag;
+#		$Label.text = "Position: " + str(ev_arrastrar_pantalla.index) + ";" + \
+#			str(ev_arrastrar_pantalla.get_position()) + ";" + str(ev_arrastrar_pantalla.get_relative());
+
+func parar_tot():
+	print("Parar tot");
+	comu.parar();
+	$carta.parar();
+	$transportador.parar();
+	$compas.parar();
+	$cartabo.parar();
+	$llapis.parar()
 
 func _on_menu_carta_option_pressed(id):
 	match id:
 		comu.Opcions_popup.MOSTRAR_COMPAS:
+			$compas.actualitzar_posicio($carta.get_position());
+			$compas.re_escalar($carta.rect_scale.x);
 			$compas.visible = true;
 			$compas/Collision_shape.disabled = false;
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, true);
@@ -59,7 +93,25 @@ func _on_menu_carta_option_pressed(id):
 		comu.Opcions_popup.AMAGAR_COMPAS:
 			$compas.visible = false;
 			$compas/Collision_shape.disabled = true;
+			$compas.parar();
 			$menu_carta.assignar_visibilitat(comu.Tipus_objecte.COMPAS, false);
+
+		comu.Opcions_popup.MOURE_COMPAS:
+			$compas.comencar_moure();
+
+		comu.Opcions_popup.GIRAR_COMPAS:
+			$compas.comencar_girar();
+
+		comu.Opcions_popup.VOLTEJAR_COMPAS:
+			$compas.voltejar();
+			
+		comu.Opcions_popup.AJUSTAR_COMPAS:
+			ajustar_compas();
+			
+		comu.Opcions_popup.PINTAR_AMB_COMPAS:
+			var centre = $compas.get_position();
+			var radi = $compas.tamany_per_defecte.x * $compas.scale.x;
+			$dibuixos.afegir_cercle(centre, radi, $carta);
 
 		comu.Opcions_popup.MOSTRAR_TRANSPORTADOR:
 			$transportador.actualitzar_posicio($carta.get_position());
@@ -168,7 +220,12 @@ func zoom_out():
 func es_primer_cop_mostrat(objecte, identificador_objecte):
 	if not objectes_mostrats[identificador_objecte]:
 		objecte.set_position(Vector2(0, 0));
+		if identificador_objecte == comu.Tipus_objecte.COMPAS:
+			objecte.set_position(Vector2(100, 100));
 		objectes_mostrats[identificador_objecte] = true;
+		
+func ajustar_compas():
+	$compas.comencar_a_ajustar();
 
 func probar_funcions():
 	$dibuixos.afegir_linia(Vector2(0,0), Vector2(500, 500));

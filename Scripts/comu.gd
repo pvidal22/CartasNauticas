@@ -1,6 +1,6 @@
 enum Opcions_popup {\
 	MOURE_CARTA \
-	, MOSTRAR_COMPAS, AMAGAR_COMPAS\
+	, MOSTRAR_COMPAS, AMAGAR_COMPAS, MOURE_COMPAS, GIRAR_COMPAS, AJUSTAR_COMPAS, VOLTEJAR_COMPAS, PINTAR_AMB_COMPAS \
 	, MOSTRAR_TRANSPORTADOR, AMAGAR_TRANSPORTADOR, MOURE_TRANSPORTADOR, GIRAR_TRANSPORTADOR, VOLTEJAR_TRANSPORTADOR\
 	, MOSTRAR_LLAPIS, AMAGAR_LLAPIS, MOURE_LLAPIS, GIRAR_LLAPIS, VOLTEJAR_LLAPIS, PUNT_LLAPIS, LINIA_LLAPIS \
 	, MOSTRAR_CARTABO, AMAGAR_CARTABO, MOURE_CARTABO, GIRAR_CARTABO, VOLTEJAR_CARTABO\
@@ -11,6 +11,7 @@ enum Tipus_objecte {TRANSPORTADOR, COMPAS, LLAPIS, CARTABO};
 
 var girant: bool = false;
 var movent: bool = false;
+var ajustant := false;
 
 var angle_rotacio = null;
 var nom_objecte: String = "";
@@ -24,7 +25,7 @@ var objecte = null;
 var escala_basica = 0;
 
 func _init(p_nom_objecte: String):
-	self.nom_objecte = p_nom_objecte; 
+	self.nom_objecte = p_nom_objecte.to_lower(); 
 
 func assignar_objecte(p_objecte):
 	self.objecte = p_objecte;
@@ -37,6 +38,9 @@ func esta_movent() -> bool:
 
 func esta_girant() -> bool:
 	return girant;
+
+func esta_ajustant()-> bool:
+	return ajustant;
 
 func mostrar(delta) -> Array:
 	if angle_rotacio != null:
@@ -78,32 +82,46 @@ func obtenir_vector_moviment(objectiu: Vector2, actual: Vector2) -> Vector2:
 	return actual.direction_to(objectiu);
 	
 func comencar_girar():
+	ajustant = false;
 	girant = true;
 	movent = false;
 	
 func comencar_moure():
+	ajustant = false;
 	girant = false;
 	movent = true;
+
+func comencar_a_ajustar():
+	ajustant = true;
+	girant = true;
+	movent  = false;
 	
 func parar():
 	girant = false;
 	movent = false;
+	ajustant = false;
 	print(str(OS.get_time()) + ". Parar " + nom_objecte);
 
-func moure(p_posicio_actual: Vector2, p_posicio_objectiu: Vector2):
+func moure(p_posicio_objectiu: Vector2):
 	# Traduim a escala 1 i posicio 0,0
 	if posicio_carta != null:
-		posicio_actual = p_posicio_actual - self.posicio_carta;
+		posicio_actual = objecte.get_position() - self.posicio_carta;
 		posicio_objectiu = p_posicio_objectiu - self.posicio_carta;
 
-func girar(p_posicio_actual: Vector2, p_posicio_ratoli: Vector2):
-	var angle = ( p_posicio_ratoli - p_posicio_actual).angle();
+func ajustar(p_posicio_objectiu: Vector2, p_tamany_per_defecte: Vector2):
+	var distancia = (p_posicio_objectiu - objecte.get_position()).length();
+	objecte.scale.x = distancia / p_tamany_per_defecte.x;
+	#objecte.scale.y = distancia.y / p_tamany_per_defecte.y;
+
+func girar(p_posicio_ratoli: Vector2):
+	var angle = ( p_posicio_ratoli - objecte.get_position()).angle();
 	angle = rad2deg(angle); # Per passar radians a graus
 	angle_rotacio = angle + 90;
-	# Cas específic pel cartabó per a fer-ho més intuitiu.
-	if self.nom_objecte.to_lower() == "cartabo":
+	# Cas específic pel cartabó i el compasper a fer-ho més intuitiu.
+	if self.nom_objecte == "cartabo":
 		angle_rotacio -= 90;
-	
+	if self.nom_objecte == "compas":
+		angle_rotacio  -= 90;
 func voltejar(item):
 	self.posicio_voltejar += 1;
 	self.posicio_voltejar = posicio_voltejar % 4;

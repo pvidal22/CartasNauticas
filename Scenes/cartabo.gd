@@ -26,10 +26,10 @@ func parar():
 	comu.parar();
 	
 func moure():
-	comu.moure(get_position(), get_viewport().get_mouse_position());
+	comu.moure(get_viewport().get_mouse_position());
 
 func girar():
-	comu.girar(get_position(), get_viewport().get_mouse_position());
+	comu.girar(get_viewport().get_mouse_position());
 	
 func voltejar():
 	comu.voltejar($Sprite);

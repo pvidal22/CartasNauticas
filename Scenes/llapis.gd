@@ -29,12 +29,12 @@ func parar():
 	comu.parar();
 	
 func moure():
-	comu.moure(get_position(), get_viewport().get_mouse_position());
+	comu.moure(get_viewport().get_mouse_position());
 
 func girar():
-	comu.girar(get_position(), get_viewport().get_mouse_position());
+	comu.girar(get_viewport().get_mouse_position());
 	
-func voltejar():	
+func voltejar():
 	comu.voltejar($Sprite)
 
 func actualitzar_posicio(nova_posicio: Vector2):
@@ -43,9 +43,8 @@ func actualitzar_posicio(nova_posicio: Vector2):
 func re_escalar(nova_escala: float):
 	comu.re_escalar(nova_escala);		
 	
-func assignar_factor_escala(_p_px_vs_mm: Vector2):
-	#var tamany_imatge: Vector2 = $Sprite.texture.get_size();
-	var factor_escala = Vector2(1.1, 1.1);
+func assignar_factor_escala(_p_px_vs_mm: Vector2):	
+	var factor_escala = Vector2(1.0, 1.0);
 	scale = factor_escala;
 	comu.assignar_escala_basica(factor_escala);
 

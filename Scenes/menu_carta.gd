@@ -5,6 +5,7 @@ var comu = load("res://Scripts/comu.gd").new("Main");
 signal option_pressed(id);
 
 var visibilitat := {};
+var versio := "20230312_06";
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,6 +17,13 @@ func _ready():
 func assignar_visibilitat(clau: int, estat: bool):
 	visibilitat[clau] = estat;
 
+func definir_versio(versio: String):
+	var menu_versio := Button.new();
+	menu_versio.text = "Versió: " + versio;
+	menu_versio.visible = true;
+	menu_versio.flat = false;
+	add_child(menu_versio);
+
 func _on_popup_menu_id_pressed(id):
 	emit_signal("option_pressed", id);
 
@@ -24,8 +32,12 @@ func _on_compass_menu_pressed():
 	menu.clear();	
 	if not visibilitat[comu.Tipus_objecte.COMPAS]:
 		menu.add_item("Mostrar compas", comu.Opcions_popup.MOSTRAR_COMPAS);
-	else:		
+	else:
 		menu.add_item("Ocultar compas", comu.Opcions_popup.AMAGAR_COMPAS);
+		menu.add_item("Moure compas", comu.Opcions_popup.MOURE_COMPAS);
+		menu.add_item("Girar compas", comu.Opcions_popup.GIRAR_COMPAS);
+		menu.add_item("Ajustar compas", comu.Opcions_popup.AJUSTAR_COMPAS);
+		menu.add_item("Pintar amb compas", comu.Opcions_popup.PINTAR_AMB_COMPAS);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
 
@@ -82,6 +94,5 @@ func _on_quit_menu_pressed():
 	menu.clear();
 	menu.add_item("Estoy seguro", comu.Opcions_popup.SORTIR_SI);
 	menu.add_item("Cancelar", comu.Opcions_popup.SORTIR_NO);
-	menu.add_item("Versión: 20230308_02", comu.Opcions_popup.SORTIR_NO);
 	
 	menu.connect("id_pressed", self, "_on_popup_menu_id_pressed");
