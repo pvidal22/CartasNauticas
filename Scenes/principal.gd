@@ -1,6 +1,6 @@
 extends Node
 
-var versio := "20230312_17";
+var versio := "20230312_18";
 var comu = load("res://Scripts/comu.gd").new("Principal");
 var objectes = null;
 var objectes_mostrats := {
@@ -27,13 +27,15 @@ func _ready():
 	self.objectes = [$cartabo, $transportador, $llapis, $dibuixos, $compas];
 	for objecte in objectes:
 		objecte.assignar_factor_escala(escala_vs_mm);
+		
+	$transportador.assignar_principal(self);
 	
 	$carta.assignar_objectes(objectes);
 	
 	$menu_carta.definir_versio(self.versio);
 	
 func _process(delta):
-	if estem_descomptant:		
+	if estem_descomptant:
 		temps_per_descomptar -= delta;
 		if temps_per_descomptar <= 0:
 			estem_descomptant = false;

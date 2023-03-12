@@ -4,13 +4,20 @@ export var tamany_mm := Vector2(150, 150);
 
 var comu = load("res://Scripts/comu.gd").new("Transportador");
 
+var principal = null;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Collision_shape.disabled = true;
 	comu.assignar_objecte(self);
 	
+func assignar_principal(p_principal):
+	principal = p_principal;
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if self.principal != null and self.principal.estem_descomptant:
+		return;
 	if comu.esta_movent(): moure();
 	if comu.esta_girant(): girar();
 	comu.mostrar(delta);
