@@ -1,5 +1,8 @@
 DOING:
+POner una etiqueta que indique la acción que se está realizando en ese momento... para saber lo que hay...
 Probar un poco el zoom en touch y hacer que el zoom sea donde esté el mouse o en el centro de los puntos de piching...
+MIrar de hacer el zoom del compas también.
+Probar el movimiento del compas en iPad
 
 TO DO:
 
